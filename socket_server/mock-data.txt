@@ -1,0 +1,12 @@
+{
+    "productId" : "Dumpling",
+    "quantity" : 2,
+    "unitPrice" : 3.99,
+    "totalPrice" : 7.98,
+    "orderId" : "65dcfef14b561209f0696af7"
+}
+for adding detail
+{
+    "detail_id" : ""
+    "status" : "confirmed"
+}

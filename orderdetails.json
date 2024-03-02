@@ -1,0 +1,9 @@
+{"_id":{"$oid":"65dcf3c5a80f6358c9159aad"},"productId":"23123lkls","quantity":3,"unitPrice":2,"totalPrice":6,"__v":0}
+{"_id":{"$oid":"65dcf46fa80f6358c9159ab2"},"productId":"kafka","quantity":3,"unitPrice":2,"totalPrice":6,"__v":0,"status":"confirmed","updatedAt":{"$date":"2024-02-27T14:06:35.657Z"}}
+{"_id":{"$oid":"65dcf61b4ff292629949fbad"},"productId":"kafka 2","quantity":3,"unitPrice":2,"totalPrice":6,"__v":0}
+{"_id":{"$oid":"65dd0d1e9b07ceca3f653d39"},"productId":"Dumpling","quantity":2,"unitPrice":3.99,"totalPrice":7.98,"__v":0}
+{"_id":{"$oid":"65dd0e6d9b07ceca3f653d40"},"productId":"KIBS","quantity":2,"unitPrice":3.99,"totalPrice":7.98,"__v":0}
+{"_id":{"$oid":"65dd11588f1a7cf579c1be5e"},"productId":"Sichuan Tofu","quantity":2,"unitPrice":3.99,"totalPrice":7.98,"status":"out","__v":0,"updatedAt":{"$date":"2024-02-29T08:49:01.205Z"}}
+{"_id":{"$oid":"65ddea3882abce8daaabb910"},"quantity":2,"unitPrice":3.99,"totalPrice":7.98,"status":"pending","createdAt":{"$date":"2024-02-27T13:57:12.558Z"},"updatedAt":{"$date":"2024-02-27T13:57:12.558Z"},"__v":0}
+{"_id":{"$oid":"65ddea964d607392156d2c5d"},"productId":"Dumpling 3.0","quantity":2,"unitPrice":3.99,"totalPrice":7.98,"status":"pending","createdAt":{"$date":"2024-02-27T13:58:46.377Z"},"updatedAt":{"$date":"2024-02-27T13:58:46.377Z"},"__v":0}
+{"_id":{"$oid":"65e025f34cff4fba3c28409c"},"productId":"Viet Hiep","quantity":2,"unitPrice":3.99,"totalPrice":7.98,"status":"confirmed","createdAt":{"$date":"2024-02-29T06:36:35.224Z"},"updatedAt":{"$date":"2024-02-29T11:36:59.704Z"},"__v":0}
