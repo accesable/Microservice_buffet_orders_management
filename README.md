@@ -12,4 +12,4 @@ This Service is a socket_server for an order service.The main use-case is to fac
 at the root project directory run `docker-compose up -d` and import the `my_sql_db.sql` into MySQL database using by PhpMyAdmin at [http://localhost:8080/](http://localhost:8080/)
 
 ### Run Order Service with `npm`
-go to the `socket_server` directory and run `npm run start`. Go to [http://localhost:8085/api-docs/](http://localhost:8085/api-docs/) for api documentations
+go to the `socket_server` directory and run `npm install && npm run start`. Go to [http://localhost:8085/api-docs/](http://localhost:8085/api-docs/) for api documentations
