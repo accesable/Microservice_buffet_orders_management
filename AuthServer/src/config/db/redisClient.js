@@ -1,9 +1,12 @@
 const redis = require("redis");
 
 // Configure Redis client connection
+const host = process.env.REDIS_HOST;
+const port = process.env.REDIS_PORT;
+console.log("Redis Host:", host);
+console.log("Redis Port:", port);
 const redisClient = redis.createClient({
-  host: "127.0.0.1",
-  port: 6379,
+  url: `redis://${host}:${port}`,
   // include other options if necessary, like password, TLS, etc.
 });
 

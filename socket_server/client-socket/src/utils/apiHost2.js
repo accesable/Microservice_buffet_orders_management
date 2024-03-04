@@ -15,7 +15,7 @@ const apiHost2 = axios.create({
 // Request interceptor for adding authorization token to every request if available
 apiHost2.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("authToken"); // Assuming token is stored in localStorage
+    const token = localStorage.getItem("accessToken"); // Assuming token is stored in localStorage
     if (token) {
       config.headers["Authorization"] = `Bearer ${token}`; // Set Authorization header
     }

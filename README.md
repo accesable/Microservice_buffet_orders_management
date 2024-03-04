@@ -13,6 +13,8 @@ at the root project directory run `docker-compose up -d` and import the `my_sql_
 
 ### Run Order Service with `npm`
 go to the `socket_server` directory and run `npm install && npm run start`. Go to [http://localhost:8085/api-docs/](http://localhost:8085/api-docs/) for api documentations
-
+### Run As Docker 
+`docker network ls` and get the ..._my_custom_network \
+`docker run --network=restaurantorderservices_my_custom_network -p 8085:8085  socker_server:1.0`
 ## Authentication Service
 Using `jsonwebtoken` for creating an Authentication Service with MySQL and Redis for refresh token storage

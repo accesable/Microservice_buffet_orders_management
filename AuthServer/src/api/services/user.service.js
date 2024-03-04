@@ -21,15 +21,25 @@ exports.createUser = async (username, password) => {
 exports.authenticateUser = async (username, password) => {
   const user = await User.findOne({ where: { username: username } });
   if (user && (await bcrypt.compare(password, user.password))) {
-    const token = jwt.sign(
-      { userId: user.id, username: user.username },
-      process.env.JWT_SECRET,
-      { expiresIn: "15m" }
-    );
+    const token = await this.generateAccessToken(user.id, user.username);
     return { token: token, userId: user.id };
   }
   console.log("User not found or password incorrect");
   return null;
+};
+
+exports.generateAccessToken = async (userId, username) => {
+  try {
+    const accessToken = jwt.sign(
+      { userId: userId, username: username },
+      process.env.JWT_SECRET,
+      { expiresIn: "15m" }
+    );
+    return accessToken;
+  } catch (error) {
+    console.error(error);
+    throw error;
+  }
 };
 
 exports.getAllUsers = async () => {
@@ -59,8 +69,20 @@ exports.generateRefreshToken = async (userId, username) => {
 exports.validateRefreshToken = async (refreshToken) => {
   try {
     const decoded = jwt.verify(refreshToken, process.env.JWT_REFRESH_SECRET);
+    console.log("Decoded Token", decoded);
+    const inStrorageToken = await redisClient.get(
+      `refreshToken:${decoded.userId}`
+    );
+    if (!inStrorageToken) {
+      console.log("No User refresh token");
+      return null;
+    } else if (inStrorageToken !== refreshToken) {
+      console.log("Token is not coresponding");
+      return null;
+    }
     return decoded;
   } catch (error) {
+    console.log("Invalid Signature");
     return null;
   }
 };

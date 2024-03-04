@@ -60,5 +60,6 @@ router.post("/signup", userController.signup);
 router.post("/login", userController.login);
 router.get("/getUser", authenticateToken, userController.getUser);
 router.get("/protected", authenticateToken, userController.protectedRoute);
+router.post("/refreshToken", userController.refreshToken);
 
 module.exports = router;

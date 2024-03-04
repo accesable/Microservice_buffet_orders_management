@@ -1,10 +1,10 @@
-// api.js
+// apiAuth.js
 
 import axios from "axios";
 
 // Create an Axios instance with default configuration
-const api = axios.create({
-  baseURL: "http://localhost:5135/api", // Base URL for all requests
+const apiAuth = axios.create({
+  baseURL: "http://localhost:8085/api", // Base URL for all requests
   headers: {
     "Content-Type": "application/json", // Default Content-Type header
     // Add other default headers here
@@ -13,7 +13,7 @@ const api = axios.create({
 });
 
 // Request interceptor for adding authorization token to every request if available
-api.interceptors.request.use(
+apiAuth.interceptors.request.use(
   (config) => {
     const token = localStorage.getItem("accessToken"); // Assuming token is stored in localStorage
     if (token) {
@@ -28,7 +28,7 @@ api.interceptors.request.use(
 );
 
 // Response interceptor for handling global response errors
-api.interceptors.response.use(
+apiAuth.interceptors.response.use(
   (response) => {
     // Any status code that lies within the range of 2xx cause this function to trigger
     return response;
@@ -40,4 +40,4 @@ api.interceptors.response.use(
   }
 );
 
-export default api;
+export default apiAuth;

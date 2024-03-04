@@ -1,0 +1,1 @@
+docker run -e PORT=8085 -e DB_USERNAME=mongoadmin -e DB_PASSWORD=mongoadminpassword -e DB_HOST=mongodb -e DB_PORT=27017 -e DB_NAME=order_service --network=restaurantorderservices_my_custom_network -p 8085:8085  socker_server:lastest

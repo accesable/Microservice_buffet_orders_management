@@ -5,6 +5,7 @@ const sequelize = require("./config/db/database");
 const { connectRedis } = require("./config/db/redisClient");
 const swaggerUi = require("swagger-ui-express");
 const swaggerJsdoc = require("swagger-jsdoc");
+const cookieParser = require("cookie-parser");
 const app = express();
 const port = process.env.PORT || 8086;
 const swaggerDefinition = {
@@ -40,6 +41,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", routes);
+app.use(cookieParser());
 
 app.listen(port, () => {
   console.log(`Example app listening on: http://localhost:${port}`);

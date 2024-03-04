@@ -41,3 +41,18 @@ exports.getUser = async (req, res) => {
 exports.protectedRoute = (req, res) => {
   res.send("This route is protected");
 };
+
+exports.refreshToken = async (req, res) => {
+  const { refreshToken } = req.body;
+  const decoded = await userService.validateRefreshToken(refreshToken);
+  if (decoded) {
+    const { userId, username } = decoded;
+    const newAccessToken = await userService.generateAccessToken(
+      userId,
+      username
+    );
+    res.json({ accessToken: newAccessToken });
+  } else {
+    res.status(401).json({ message: "Invalid refresh token" });
+  }
+};
