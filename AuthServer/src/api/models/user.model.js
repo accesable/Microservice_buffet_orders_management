@@ -39,10 +39,5 @@ const User = sequelize.define(
   }
 );
 
-// what is this function doing?
-// It is a hook that is called before creating a new user.
-// It hashes the password before saving the user.
-// This is a Sequelize hook. so it likes a trigger   in SQL ?
-// Yes, it is similar to a trigger in SQL. It is a function that is called before or after a certain event occurs.
 
 module.exports = User;

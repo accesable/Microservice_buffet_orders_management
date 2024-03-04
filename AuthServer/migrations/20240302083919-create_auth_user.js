@@ -20,6 +20,7 @@ module.exports = {
       username: {
         type: Sequelize.STRING(120),
         allowNull: false,
+        unique: true,
       },
       password: {
         type: Sequelize.STRING(120),
@@ -95,7 +96,7 @@ module.exports = {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
       },
-    });
+    });  
   },
 
   async down(queryInterface, Sequelize) {

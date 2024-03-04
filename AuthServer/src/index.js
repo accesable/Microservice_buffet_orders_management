@@ -3,8 +3,27 @@ const express = require("express");
 const routes = require("./api/routes");
 const sequelize = require("./config/db/database");
 const { connectRedis } = require("./config/db/redisClient");
+const swaggerUi = require("swagger-ui-express");
+const swaggerJsdoc = require("swagger-jsdoc");
 const app = express();
 const port = process.env.PORT || 8086;
+const swaggerDefinition = {
+  openapi: "3.0.0",
+  info: {
+    title: "Express API with Swagger",
+    version: "1.0.0",
+  },
+};
+const options = {
+  swaggerDefinition,
+  // Paths to files containing OpenAPI definitions
+  apis: [
+    "./src/api/routes/*.js",
+    "./src/api/models/*.js",
+    "./src/api/validations/*.js",
+  ],
+};
+const swaggerSpec = swaggerJsdoc(options);
 
 // Initiate Redis connection
 connectRedis();
@@ -19,7 +38,7 @@ sequelize
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", routes);
 
 app.listen(port, () => {
