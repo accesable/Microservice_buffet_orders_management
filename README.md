@@ -13,3 +13,6 @@ at the root project directory run `docker-compose up -d` and import the `my_sql_
 
 ### Run Order Service with `npm`
 go to the `socket_server` directory and run `npm install && npm run start`. Go to [http://localhost:8085/api-docs/](http://localhost:8085/api-docs/) for api documentations
+
+## Authentication Service
+Using `jsonwebtoken` for creating an Authentication Service with MySQL and Redis for refresh token storage
