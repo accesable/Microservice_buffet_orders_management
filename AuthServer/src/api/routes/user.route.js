@@ -58,8 +58,34 @@ router.post("/signup", userController.signup);
  *         description: Unauthorized
  */
 router.post("/login", userController.login);
+/**
+ * @swagger
+ * /api/users/refreshToken:
+ *   post:
+ *     summary: Refresh the authentication token
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               refreshToken:
+ *                 type: string
+ *     responses:
+ *       200:
+ *         description: Authentication token refreshed
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 accessToken:
+ *                   type: string
+ *       401:
+ *         description: Unauthorized
+ */
+router.post("/refreshToken", userController.refreshToken);
 router.get("/getUser", authenticateToken, userController.getUser);
 router.get("/protected", authenticateToken, userController.protectedRoute);
-router.post("/refreshToken", userController.refreshToken);
-
 module.exports = router;
