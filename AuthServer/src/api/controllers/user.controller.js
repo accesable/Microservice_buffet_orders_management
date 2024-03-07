@@ -13,6 +13,11 @@ exports.signup = async (req, res) => {
 
 exports.login = async (req, res) => {
   const { username, password } = req.body;
+  if (username === undefined || password === undefined)
+    return res
+      .status(400)
+      .json({ message: "Username and password are required" });
+
   try {
     const { token: accessToken, userId } = await userService.authenticateUser(
       username,
