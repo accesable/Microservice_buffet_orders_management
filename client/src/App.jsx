@@ -9,6 +9,9 @@ import SignUp from './pages/SignUp';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import FooterCom from './components/Footer';
+import PrivateRoute from './components/PrivateRoute';
+import Menu from './pages/Menu';
+import Orders from './pages/Orders';
 const App = () => {
   return (
     <BrowserRouter>
@@ -19,7 +22,12 @@ const App = () => {
         <Route path="/projects" element={<Project />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path='/dashboard' element={<Dashboard />} />
+        <Route path="/menu/:orderId" element={<Menu />} />
+        <Route path="/orders" element={<Orders />} />
+        <Route element={<PrivateRoute />}>
+          <Route path='/dashboard' element={<Dashboard />} />
+        </Route>
+        
       </Routes>
       <FooterCom/>
     </BrowserRouter>

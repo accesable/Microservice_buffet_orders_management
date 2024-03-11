@@ -14,6 +14,15 @@ const swaggerDefinition = {
     title: "Express API with Swagger",
     version: "1.0.0",
   },
+  components: {
+    securitySchemes: {
+      BearerAuth: {
+        type: "http",
+        scheme: "bearer",
+        bearerFormat: "JWT",
+      },
+    },
+  },
 };
 const options = {
   swaggerDefinition,

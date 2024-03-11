@@ -7,6 +7,7 @@ const {
   appendDetailToOrder,
   updateOrderDetailStatus,
   getAllOrderDetails,
+  appendDetailsToOrder,
 } = require("../controllers/order.controller");
 
 router.get("/", getAllOrders);
@@ -18,6 +19,7 @@ router.post("/create-order", createNewOrder);
 router.get("/:status", getOrdersByStatus);
 // Route for appending a detail to an order
 router.post("/append-detail/:orderId", appendDetailToOrder);
+router.post("/append-details/:orderId", appendDetailsToOrder);
 // Route for updating the status of an order detail
 router.put("/detail-status/:detailId", updateOrderDetailStatus);
 
@@ -63,10 +65,10 @@ module.exports = router;
  *                           type: string
  *                           description: The order detail ID
  *                           example: 65dcf46fa80f6358c9159ab2
- *                         productId:
- *                           type: string
+ *                         itemId:
+ *                           type: integer
  *                           description: The product identifier
- *                           example: kafka
+ *                           example: 2
  *                         quantity:
  *                           type: integer
  *                           description: The quantity of the product ordered
@@ -185,10 +187,10 @@ module.exports = router;
  *                     type: string
  *                     description: The order detail ID.
  *                     example: 65dcf3c5a80f6358c9159aad
- *                   productId:
- *                     type: string
+ *                   itemId:
+ *                     type: integer
  *                     description: The product ID associated with the order detail.
- *                     example: 23123lkls
+ *                     example: 23
  *                   quantity:
  *                     type: integer
  *                     description: The quantity of the product ordered.
@@ -236,8 +238,8 @@ module.exports = router;
  *             schema:
  *               type: object
  *               properties:
- *                 productId:
- *                   type: string
+ *                 itemId:
+ *                   type: integer
  *                   description: ID of the product.
  *                 quantity:
  *                   type: integer

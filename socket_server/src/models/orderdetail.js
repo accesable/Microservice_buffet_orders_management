@@ -2,7 +2,8 @@ const mongoose = require("mongoose");
 
 const orderDetailSchema = new mongoose.Schema(
   {
-    productId: String,
+    itemId: Number,
+    itemName: String,
     quantity: Number,
     unitPrice: Number,
     totalPrice: Number,

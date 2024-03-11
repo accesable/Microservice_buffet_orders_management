@@ -45,6 +45,10 @@ const User = sequelize.define(
       allowNull: false,
       defaultValue: sequelize.literal("CURRENT_TIMESTAMP"),
     },
+    imageURL: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
   },
   {
     // Other model options go here

@@ -2,11 +2,14 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
 const { redisClient } = require("../../config/db/redisClient");
-exports.createUser = async (username, password) => {
+exports.createUser = async (username, password, firstname, lastname, email) => {
   const hashedPassword = await bcrypt.hash(password, 10);
   const user = await User.create({
     username: username,
     password: hashedPassword,
+    firstname: firstname,
+    lastname: lastname,
+    email: email,
   })
     .catch((error) => {
       console.log(error);
@@ -40,6 +43,16 @@ exports.generateAccessToken = async (userId, username) => {
     console.error(error);
     throw error;
   }
+};
+
+exports.updateUserPicture = async (userId, picture) => {
+  const user = await User.findOne({ where: { id: userId } });
+  if (user) {
+    user.imageURL = picture;
+    await user.save();
+    return user;
+  }
+  return null;
 };
 
 exports.getAllUsers = async () => {

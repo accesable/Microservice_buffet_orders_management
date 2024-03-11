@@ -5,6 +5,7 @@ const {
   updateOrderDetail,
   getOrderDetailsOnStatus,
   getOrderDetails,
+  addDetailsToOrder,
 } = require("../services/orderService");
 
 exports.getAllOrders = async (req, res) => {
@@ -75,5 +76,38 @@ exports.updateOrderDetailStatus = async (req, res) => {
       message: "Error updating order detail status",
       error: error.message,
     });
+  }
+};
+
+exports.appendDetailsToOrder = async (req, res) => {
+  const { orderId } = req.params;
+  const items = req.body; // This should be an array of items
+
+  console.log("orderId", orderId);
+  console.log("items", items);
+
+  // Validate input
+  if (!orderId || !Array.isArray(items) || items.length === 0) {
+    return res.status(400).send({ message: "Invalid order ID or items" });
+  }
+
+  for (const item of items) {
+    if (!item.itemId || !item.quantity || item.quantity < 1) {
+      return res.status(400).send({ message: "Invalid item data" });
+    }
+  }
+  try {
+    // Call the addDetailsToOrder service function with the validated items and orderId
+    const detailIds = await addDetailsToOrder(items, orderId);
+
+    // If successful, send back the ids of the added order details
+    res.send({
+      message: "Order details added successfully",
+      detailIds: detailIds,
+    });
+  } catch (error) {
+    console.error("Error appending details to order:", error);
+    // Handle any errors that occur during the process
+    res.status(500).send({ message: "Failed to append details to order" });
   }
 };

@@ -25,7 +25,7 @@ const getOrderDetailsOnStatus = async (status) => {
 
 const addDetailToOrder = async (orderDetail, orderId) => {
   const detail = new OrderDetail({
-    productId: orderDetail.productId,
+    itemId: orderDetail.itemId,
     quantity: orderDetail.quantity,
     unitPrice: orderDetail.unitPrice,
     totalPrice: orderDetail.totalPrice,
@@ -42,6 +42,40 @@ const updateOrderDetail = async (detailId, orderDetailUpdateRequest) => {
     status: orderDetailUpdateRequest.status,
   });
 };
+const addDetailsToOrder = async (orderDetails, orderId) => {
+  try {
+    // Array to hold the ids of the saved order details
+    const detailIds = [];
+
+    // Loop through each orderDetail item in the array
+    for (const orderDetail of orderDetails) {
+      const detail = new OrderDetail({
+        itemId: orderDetail.itemId,
+        quantity: orderDetail.quantity,
+        unitPrice: orderDetail.unitPrice,
+        totalPrice: orderDetail.totalPrice,
+      });
+
+      // Save the OrderDetail document
+      const savedDetail = await detail.save();
+
+      // Push the saved detail's id into the detailIds array
+      detailIds.push(savedDetail._id);
+    }
+
+    // Once all OrderDetail items are processed and saved,
+    // update the Order document by pushing all detailIds into the orderdetails array
+    await Order.findByIdAndUpdate(orderId, {
+      $push: { orderdetails: { $each: detailIds } },
+    });
+
+    // Return the ids of the added order details
+    return detailIds;
+  } catch (error) {
+    // Handle any errors that occur during the process
+    throw error;
+  }
+};
 
 module.exports = {
   createOrder,
@@ -50,4 +84,5 @@ module.exports = {
   updateOrderDetail,
   getOrderDetailsOnStatus,
   getOrderDetails,
+  addDetailsToOrder,
 };

@@ -1,13 +1,36 @@
+const { use } = require("../routes");
 const userService = require("../services/user.service");
 
 exports.signup = async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, firstname, lastname, email } = req.body;
 
   try {
-    await userService.createUser(username, password);
+    await userService.createUser(
+      username,
+      password,
+      firstname,
+      lastname,
+      email
+    );
     res.status(201).json({ message: "User Created" });
   } catch (error) {
     res.status(500).json({ message: "Error creating user" });
+  }
+};
+
+exports.updateUserPicture = async (req, res) => {
+  const user = await userService.updateUserPicture(
+    req.params.userId,
+    req.file.path
+  );
+  if (user) {
+    res.json({
+      message: "User picture updated",
+      imageURL: user.imageURL,
+      userId: user.id,
+    });
+  } else {
+    res.status(404).json({ message: "User not found" });
   }
 };
 
@@ -29,7 +52,12 @@ exports.login = async (req, res) => {
     );
     if (accessToken && refreshToken) {
       await userService.saveRefreshToken(userId, refreshToken);
-      res.json({ accessToken, refreshToken });
+      res.json({
+        accessToken,
+        refreshToken,
+        userId: userId,
+        username: username,
+      });
     } else {
       res.status(401).send({ message: "Authentication failed" });
     }
