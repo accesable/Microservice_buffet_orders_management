@@ -30,7 +30,7 @@ exports.getAllOrderDetails = async (req, res) => {
   }
 };
 
-exports.getOrdersByStatus = async (req, res) => {
+exports.getOrderDetailsByStatus = async (req, res) => {
   try {
     const orders = await getOrderDetailsOnStatus(req.params.status);
     res.json(orders);
@@ -44,7 +44,8 @@ exports.getOrdersByStatus = async (req, res) => {
 
 exports.createNewOrder = async (req, res) => {
   try {
-    const order_id = await createOrder(req.body); // Assuming createOrder function needs order data
+    const { tableId } = req.params;
+    const order_id = await createOrder(parseInt(tableId)); // Assuming createOrder function needs order data
     res.json({ message: `Order ${order_id} created` });
   } catch (error) {
     res

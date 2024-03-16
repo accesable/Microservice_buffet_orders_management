@@ -1,6 +1,8 @@
 import React,{useState,useEffect} from 'react'
-import { Table,Badge } from 'flowbite-react'
+import { Table,Badge, Button } from 'flowbite-react'
 import { Link } from 'react-router-dom';
+import {statusBadgeMap} from '../components/statusBadgeMap';
+import LoadingSpinner from '../components/LoadingSpinner';
 function Orders() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -37,20 +39,16 @@ function Orders() {
         setExpandedRows(newExpandedRows);
       };
       if (isLoading) {
-        return <div>Loading...</div>;
+        return <div><LoadingSpinner/></div>;
       }
     
       if (error) {
         return <div>Error: {error}</div>;
       }
-      const statusBadgeMap = {
-        'pending': { color: 'warning', text: 'Pending' },
-        'confirmed': { color: 'success', text: 'Confirmed by the chief staff' },
-        'declined': { color: 'failure', text: 'Declined by the chief staff' },
-        'out': { color: 'failure', text: 'This Food Item is out of ingredients' },
-      };
+
   return (
-    <div className='flex justify-center'>
+
+    <div className='flex'>
         <Table hoverable>
         <Table.Head>
           <Table.HeadCell>Table ID</Table.HeadCell>
@@ -88,7 +86,7 @@ function Orders() {
                       <ul>
                         {order.orderdetails.map((detail) => (
                           <li key={detail._id}>
-                            Item ID: {detail.itemId}, Quantity: {detail.quantity}, Status : <Badge className='inline font-bold ' color={statusBadgeMap[detail.status].color}>{statusBadgeMap[detail.status].text}</Badge>
+                            Item Name : {detail.itemName}, Quantity: {detail.quantity}, Status : <Badge className='inline font-bold ' color={statusBadgeMap[detail.status].color}>{statusBadgeMap[detail.status].text}</Badge>
                           </li>
                         ))}
                       </ul>

@@ -9,6 +9,13 @@ const orderSchema = new mongoose.Schema({
       ref: "OrderDetail",
     },
   ],
+  table: Number,
+  numberOfPeople: Number,
+  currentStatus: {
+    type: String,
+    enum: ["free", "occupied", "reserved"],
+    default: "free",
+  },
 });
 
 module.exports = mongoose.model("Order", orderSchema);

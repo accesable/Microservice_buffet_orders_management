@@ -12,6 +12,8 @@ import FooterCom from './components/Footer';
 import PrivateRoute from './components/PrivateRoute';
 import Menu from './pages/Menu';
 import Orders from './pages/Orders';
+import OrderDetails from './pages/OrderDetails';
+import Test from './pages/Test';
 const App = () => {
   return (
     <BrowserRouter>
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/menu/:orderId" element={<Menu />} />
         <Route path="/orders" element={<Orders />} />
+        <Route path="/orderdetails" element={<OrderDetails />} />
+        <Route path="/test" element={<Test />} />
         <Route element={<PrivateRoute />}>
           <Route path='/dashboard' element={<Dashboard />} />
         </Route>

@@ -1,14 +1,20 @@
 const Order = require("../../models/order");
 const OrderDetail = require("../../models/orderdetail");
 
-const createOrder = async () => {
+const createOrder = async (tableId) => {
   const order = new Order({
     created_at: Date.now(),
     end_at: null,
     orderdetails: [],
+    table: tableId,
   });
   const { _id: order_id } = await order.save();
   return order_id;
+};
+
+const getOrderById = async (orderId) => {
+  const order = await Order.findById(orderId);
+  return order;
 };
 
 const getOrderDetails = async () => {
@@ -43,6 +49,7 @@ const updateOrderDetail = async (detailId, orderDetailUpdateRequest) => {
   });
 };
 const addDetailsToOrder = async (orderDetails, orderId) => {
+  const { table } = await getOrderById(orderId);
   try {
     // Array to hold the ids of the saved order details
     const detailIds = [];
@@ -51,9 +58,11 @@ const addDetailsToOrder = async (orderDetails, orderId) => {
     for (const orderDetail of orderDetails) {
       const detail = new OrderDetail({
         itemId: orderDetail.itemId,
+        itemName: orderDetail.itemName,
         quantity: orderDetail.quantity,
         unitPrice: orderDetail.unitPrice,
         totalPrice: orderDetail.totalPrice,
+        table: table,
       });
 
       // Save the OrderDetail document

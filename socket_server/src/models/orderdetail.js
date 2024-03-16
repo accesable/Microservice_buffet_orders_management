@@ -9,9 +9,10 @@ const orderDetailSchema = new mongoose.Schema(
     totalPrice: Number,
     status: {
       type: String,
-      enum: ["pending", "confirmed", "declined", "out"],
+      enum: ["pending", "confirmed", "prepare", "in_serve", "declined", "out"],
       default: "pending", // Optional: set a default status
     },
+    table: Number,
   },
   { timestamps: true }
 );

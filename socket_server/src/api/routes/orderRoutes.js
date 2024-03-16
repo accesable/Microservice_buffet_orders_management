@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const {
   getAllOrders,
-  getOrdersByStatus,
+  getOrderDetailsByStatus,
   createNewOrder,
   appendDetailToOrder,
   updateOrderDetailStatus,
@@ -14,9 +14,9 @@ router.get("/", getAllOrders);
 // Route for fetching orders by status
 router.get("/orderdetails", getAllOrderDetails);
 // Route for creating a new order
-router.post("/create-order", createNewOrder);
+router.post("/create-order/:tableId", createNewOrder);
 // Route for fetching orders by status
-router.get("/:status", getOrdersByStatus);
+router.get("/:status", getOrderDetailsByStatus);
 // Route for appending a detail to an order
 router.post("/append-detail/:orderId", appendDetailToOrder);
 router.post("/append-details/:orderId", appendDetailsToOrder);
@@ -100,11 +100,18 @@ module.exports = router;
  */
 /**
  * @swagger
- * /api/orders/create-order:
+ * /api/orders/create-order/{tableId}:
  *   post:
  *     summary: create an order (or open table for customers)
  *     description: Returns a list of orders, each with its details including product information, quantity, unit price, and status.
  *     tags: [Orders]
+ *     parameters :
+ *       - in: path
+ *         name: tableId
+ *         required: true
+ *         schema:
+ *           type: number
+ *         description: Id Of the table which order going to be created.
  *     responses:
  *       200:
  *         description: A JSON array of orders

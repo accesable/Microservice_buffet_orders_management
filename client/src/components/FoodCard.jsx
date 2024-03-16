@@ -37,10 +37,10 @@ function FoodCard({itemId,itemName,itemDescription,itemPrice,itemImage}) {
         <p className="font-normal text-gray-700 dark:text-gray-400">
             {itemDescription}
         </p>
-        <p className="font-bold text-gray-900 dark:text-white">
+        {/* <p className="font-bold text-gray-900 dark:text-white">
             ${itemPrice}
 
-        </p>
+        </p> */}
         <div className="flex flex-wrap gap-2">
             <Button
             className="text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800"
@@ -49,10 +49,8 @@ function FoodCard({itemId,itemName,itemDescription,itemPrice,itemImage}) {
             Add to Cart
             </Button>
 
-            <input type="number" name="quantity" min={1} max={5} id="quantity" className='rounded-xl w-15'       value={quantity} // Controlled component
+            <input type="number" name="quantity" min={1} max={5} id="quantity" className='rounded-xl w-15' value={quantity} // Controlled component
       onChange={handleChange} />
-
-            
         </div>
         </Card>
     </div>

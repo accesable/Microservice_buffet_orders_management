@@ -2,8 +2,9 @@ import React , {useState,useEffect} from 'react'
 import img from './tempura-tom.jpg'
 import FoodCard from '../components/FoodCard'
 import { useParams } from 'react-router-dom';
-import FloatingButton from '../components/FloatingAddDetailsBtn';
-import OrderDetailsConfirmModal from '../components/OrderDetailsConfirmModal';
+import FloatingButton from '../components/OrderDetails/FloatingAddDetailsBtn';
+import OrderDetailsConfirmModal from '../components/OrderDetails/OrderDetailsConfirmModal';
+import LoadingSpinner from '../components/LoadingSpinner';
 function Menu() {
   const { orderId } = useParams();
     const [items, setItems] = useState([]);
@@ -34,7 +35,7 @@ function Menu() {
     
         fetchItems();
       }, []);
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div><LoadingSpinner/></div>;
     if (error) return <div>Error: {error.message}</div>;
   return (
     <div className='flex flex-wrap gap-4 justify-start'>
@@ -49,7 +50,7 @@ function Menu() {
         />
       ))}
       <FloatingButton onClick={handleOpenModal}/>
-      <OrderDetailsConfirmModal openModal={isModalOpen} setOpenModal={setIsModalOpen} />
+      <OrderDetailsConfirmModal openModal={isModalOpen} setOpenModal={setIsModalOpen} orderId={orderId} />
     </div>
   )
 }
