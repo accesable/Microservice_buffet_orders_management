@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -23,9 +24,22 @@ namespace PaymentService.Controllers
 
         // GET: api/Payments
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Payment>>> GetPayments()
+        public async Task<ActionResult<IEnumerable<Payment>>> GetPayments(DateTime? date = null)
         {
-            return await _context.Payments.ToListAsync();
+            IQueryable<Payment> query = _context.Payments;
+
+            if (date.HasValue)
+            {
+                // Filter payments by date
+                // Filter payments by date (ignore time component)
+                DateTime startDate = date.Value.Date.AddDays(1);
+                DateTime endDate = startDate.AddDays(1); // Add one day to include all payments on the specified date
+                Console.WriteLine(startDate);
+                Console.WriteLine(endDate);
+                query = query.Where(p => p.CreatedAt >= startDate && p.CreatedAt < endDate.AddTicks(-1));
+            }
+
+            return await query.ToListAsync();
         }
 
         // GET: api/Payments/5
@@ -76,8 +90,9 @@ namespace PaymentService.Controllers
         // POST: api/Payments
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Payment>> PostPayment(Payment payment)
+        public async Task<ActionResult<Payment>> PostPayment(Payment payment ,[Required] int numberOfPeople,[Required] int pricePerPerson)
         {
+            payment.Amount = pricePerPerson * numberOfPeople;
             _context.Payments.Add(payment);
             await _context.SaveChangesAsync();
 

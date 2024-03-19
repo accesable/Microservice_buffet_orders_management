@@ -6,6 +6,7 @@ const {
   getOrderDetailsOnStatus,
   getOrderDetails,
   addDetailsToOrder,
+  getOrderById,
 } = require("../services/orderService");
 
 exports.getAllOrders = async (req, res) => {
@@ -16,6 +17,17 @@ exports.getAllOrders = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error fetching orders", error: error.message });
+  }
+};
+
+exports.getOrderById = async (req, res) => {
+  try {
+    const order = await getOrderById(req.params.orderId);
+    res.json(order);
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error fetching order by ID", error: error.message });
   }
 };
 
@@ -44,8 +56,11 @@ exports.getOrderDetailsByStatus = async (req, res) => {
 
 exports.createNewOrder = async (req, res) => {
   try {
-    const { tableId } = req.params;
-    const order_id = await createOrder(parseInt(tableId)); // Assuming createOrder function needs order data
+    const { tableId, numberOfPeople } = req.params;
+    const order_id = await createOrder(
+      parseInt(tableId),
+      parseInt(numberOfPeople)
+    ); // Assuming createOrder function needs order data
     res.json({ message: `Order ${order_id} created` });
   } catch (error) {
     res
@@ -56,7 +71,10 @@ exports.createNewOrder = async (req, res) => {
 
 exports.appendDetailToOrder = async (req, res) => {
   try {
-    const detail_id = await addDetailToOrder(req.body, req.params.orderId);
+    const { _id: detail_id } = await addDetailToOrder(
+      req.body,
+      req.params.orderId
+    );
     res.json({
       message: `Detail ID ${detail_id} appended to order ${req.params.orderId}`,
     });

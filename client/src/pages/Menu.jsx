@@ -1,5 +1,4 @@
 import React , {useState,useEffect} from 'react'
-import img from './tempura-tom.jpg'
 import FoodCard from '../components/FoodCard'
 import { useParams } from 'react-router-dom';
 import FloatingButton from '../components/OrderDetails/FloatingAddDetailsBtn';

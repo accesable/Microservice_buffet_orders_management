@@ -1,51 +1,64 @@
 import { Button, Modal,List, Alert } from 'flowbite-react';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux'; 
 import { clearCart,setError,setLoading } from "../../redux/cartReducer";
+import { io } from 'socket.io-client';
 function OrderDetailsConfirmModal({ openModal, setOpenModal ,orderId }) {
     const dispatch = useDispatch();
     const cartItems = useSelector((state) => state.cart.items);
     const isLoading = useSelector((state) => state.cart.loading);
+    const [socket,setSocket] = useState(null);
     const [message,setMessage] = useState('');
     const [status ,setStatus] = useState('');
 
+    useEffect(() => {
+      const socket = io('http://localhost:8085');
+      socket.on("connect", () => {
+        console.log("Connected to server");
+      });
+      setSocket(socket);
+    }, []);
+
 
     const handleConfirmDetails = async () => {
-      dispatch(setLoading(true));
-      try {
-          const response = await fetch(`http://localhost:8085/api/orders/append-details/${orderId}`, {
-              method: 'POST',
-              headers: {
-                  'Content-Type': 'application/json',
-              },
-              body: JSON.stringify(
-                  cartItems
-                  // You can add other order-related fields here
-              ),
-          });
+      const details = { orderId : orderId, listDetails : cartItems}
+      socket.emit('add details',details);
+      dispatch(clearCart());
+      // dispatch(setLoading(true));
+      // try {
+      //     const response = await fetch(`/api/orders/append-details/${orderId}`, {
+      //         method: 'POST',
+      //         headers: {
+      //             'Content-Type': 'application/json',
+      //         },
+      //         body: JSON.stringify(
+      //             cartItems
+      //             // You can add other order-related fields here
+      //         ),
+      //     });
 
-          if (!response.ok) {
-              throw new Error('Network response was not ok');
-          }
+      //     if (!response.ok) {
+      //         throw new Error('Network response was not ok');
+      //     }
 
-          // Handle the response data as needed
-          const data = await response.json();
-          console.log('Order confirmed:', data);
+      //     // Handle the response data as needed
+      //     const data = await response.json();
+      //     console.log('Order confirmed:', data);
 
-          // Optionally clear the cart after successful confirmation
-          dispatch(clearCart());
-          dispatch(setError(null));
-          setStatus('success');
-          setMessage('Order Details confirmed successfully');
+      //     // Optionally clear the cart after successful confirmation
+      //     dispatch(clearCart());
+      //     dispatch(setError(null));
+      //     setStatus('success');
+      //     setMessage('Order Details confirmed successfully');
 
-      } catch (error) {
-          console.error('There was a problem with the fetch operation:', error);
-          dispatch(setError('There was a problem with the fetch operation'));
-          setStatus('failure');
-          setMessage('There was a problem with the fetch operation');
-      } finally {
-        dispatch(setLoading(false));
-      }
+      // } catch (error) {
+      //     console.error('There was a problem with the fetch operation:', error);
+      //     dispatch(setError('There was a problem with the fetch operation'));
+      //     setStatus('failure');
+      //     setMessage('There was a problem with the fetch operation');
+      // } finally {
+      //   dispatch(setLoading(false));
+      // }
   };
     const handleClearCart = () => {
         // Dispatch the clearCart action

@@ -1,31 +1,49 @@
 import React,{useState,useEffect} from 'react'
-import { Table,Badge, Button } from 'flowbite-react'
+import { Table,Badge, Button,TextInput } from 'flowbite-react'
 import { Link } from 'react-router-dom';
 import {statusBadgeMap} from '../components/statusBadgeMap';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { IoIosAddCircleOutline } from "react-icons/io";
+import PaymentModal from '../components/PaymentModal';
 function Orders() {
+  const [table, setTable] = useState(0);
+  const [numberOfPeople, setNumberOfPeople] = useState(0);
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
+    const [isAdding, setIsAdding] = useState(false);
     const [error, setError] = useState(null);
     const [expandedRows, setExpandedRows] = useState(new Set());
+    const [selectedOrder, setSelectedOrder] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+
+
+  const handlePaymentButtonClick = (order) => {
+    setSelectedOrder(order);
+    setShowModal(true);
+  };
+
+
+    const fetchOrders = async () => {
+      setIsLoading(true);
+      setError(null); // Reset previous errors
+
+      try {
+        const response = await fetch('/api/orders');
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        setOrders(data);
+      } catch (err) {
+        setError(err.message);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+
     useEffect(() => {
-        const fetchOrders = async () => {
-          setIsLoading(true);
-          setError(null); // Reset previous errors
-    
-          try {
-            const response = await fetch('http://localhost:8085/api/orders');
-            if (!response.ok) {
-              throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            const data = await response.json();
-            setOrders(data);
-          } catch (err) {
-            setError(err.message);
-          } finally {
-            setIsLoading(false);
-          }
-        };
+
     
         fetchOrders();
       }, []);
@@ -38,6 +56,36 @@ function Orders() {
         }
         setExpandedRows(newExpandedRows);
       };
+      const handleCreateOrder = async () => {
+        try {
+          const response = await fetch(`/api/orders/create-order/${table}/people/${numberOfPeople}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              table: parseInt(table),
+              numberOfPeople: parseInt(numberOfPeople),
+            }),
+          });
+    
+          if (!response.ok) {
+            throw new Error('Network response was not ok');
+          }
+    
+          // Handle the response data as needed
+          const data = await response.json();
+          console.log('Order created:', data);
+    
+          // Optionally do something after the order is created, such as showing a success message or redirecting
+        } catch (error) {
+          console.error('There was a problem with the fetch operation:', error);
+          // Optionally handle errors, e.g., display an error message to the user
+        }finally{
+          setIsAdding(false);
+          fetchOrders();
+        }
+      };
       if (isLoading) {
         return <div><LoadingSpinner/></div>;
       }
@@ -48,13 +96,28 @@ function Orders() {
 
   return (
 
-    <div className='flex'>
+    <div className='flex justify-center'>
+        <PaymentModal order={selectedOrder} showModal={showModal} setShowModal={setShowModal}  />
+
         <Table hoverable>
+        <Table.Head>
+          <Table.HeadCell colSpan={4}>
+        {isAdding ? (<div className='flex gap-2'>
+          <TextInput id="table" onChange={(e) => setTable(e.target.value)} type="number" placeholder="table  : 1 ,2 ,3" required />
+          <TextInput id="numberOfPeople" onChange={(e) => setNumberOfPeople(e.target.value)} type="number" placeholder="number or people  : 1 ,2 ,3" required />
+          <Button color='failure'  onClick={()=>setIsAdding(false)}>Cancel</Button>
+          <Button color='success'  onClick={()=>handleCreateOrder()}>Create</Button>
+        </div>) : <Button color='blue' onClick={()=>setIsAdding(true)}>
+            <IoIosAddCircleOutline/>  Add Order
+          </Button>}
+          </Table.HeadCell>
+        </Table.Head>
         <Table.Head>
           <Table.HeadCell>Table ID</Table.HeadCell>
           <Table.HeadCell>Open At</Table.HeadCell>
           <Table.HeadCell>Closed At</Table.HeadCell>
           <Table.HeadCell>Number of Order Details</Table.HeadCell>
+          <Table.HeadCell>Number of People</Table.HeadCell>
           <Table.HeadCell>
             <span className="sr-only">Edit</span>
           </Table.HeadCell>
@@ -69,8 +132,14 @@ function Orders() {
               <Table.Cell>{new Date(order.created_at).toLocaleString()}</Table.Cell>
               <Table.Cell>{order.end_at ? new Date(order.end_at).toLocaleString() : 'Not yet'}</Table.Cell>
               <Table.Cell>{order.orderdetails.length}</Table.Cell>
+              <Table.Cell>{order.numberOfPeople}</Table.Cell>
               <Table.Cell>
                 <Link to={`/menu/${order._id}`}>Add Details</Link>
+              </Table.Cell>
+              <Table.Cell>
+              <Button onClick={() => handlePaymentButtonClick(order)}>
+                Create Payment
+              </Button>
               </Table.Cell>
               <Table.Cell>
                   <button>
@@ -86,7 +155,7 @@ function Orders() {
                       <ul>
                         {order.orderdetails.map((detail) => (
                           <li key={detail._id}>
-                            Item Name : {detail.itemName}, Quantity: {detail.quantity}, Status : <Badge className='inline font-bold ' color={statusBadgeMap[detail.status].color}>{statusBadgeMap[detail.status].text}</Badge>
+                            Item Name : {detail.itemName}, Quantity: {detail.quantity}, Table : {detail.table}, Status : <Badge className='inline font-bold ' color={statusBadgeMap[detail.status].color}>{statusBadgeMap[detail.status].text}</Badge>
                           </li>
                         ))}
                       </ul>

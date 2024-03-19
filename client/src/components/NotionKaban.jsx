@@ -3,18 +3,38 @@ import { FiPlus, FiTrash } from "react-icons/fi";
 import { motion } from "framer-motion";
 import { FaFire } from "react-icons/fa";
 import LoadingSpinner from "./LoadingSpinner";
+import io from 'socket.io-client';
 
 export const CustomKanban = () => {
     const [orderdetails, setOrderDetails] = useState([]);
     const [isloading, setIsLoading] = useState(true);
     const [error, setError] = useState(null);
-    const [cards,setCards] = useState([])
+    const [cards, setCards] = useState([]);
     useEffect(() => {
+        const socket = io('http://localhost:8085');
+        socket.on("connect", () => {
+          console.log("Connected to server");
+          socket.emit("join", "chief");
+        });
+        socket.on("add details", (receivedDetails) => {
+          console.log("Received details:", receivedDetails);
+        });
+        socket.on("incomming orders", (orders) => {
+          // Append the new order to the existing cards
+          
+          const transformedData = orders.map(item => ({
+            title: `${item.itemName} - Quantity: ${item.quantity} - Table: ${item.table}`,
+            id: item._id,
+            column: item.status
+        }));
+        console.log('New Order:',transformedData);
+        setCards((prevCards) => [...prevCards, ...transformedData]);
+      });
+
+
         const fetchOrders = async () => {
           setIsLoading(true);
           setError(null); // Reset previous errors
-          
-    
           try {
             const response = await fetch('/api/orders/orderdetails');
             if (!response.ok) {
@@ -35,12 +55,15 @@ export const CustomKanban = () => {
           } catch (err) {
             setError(err.message);
           } finally {
-            console.log(cards)
             setIsLoading(false);
           }
         };
     
          fetchOrders();
+         return () => {
+          // Clean up the socket connection when the component unmounts
+          socket.disconnect();
+      };
       }, []);
         if (isloading) {
             return <div><LoadingSpinner/></div>;
@@ -50,14 +73,12 @@ export const CustomKanban = () => {
         }
   return (
     <div className="h-screen w-full bg-neutral-900 text-neutral-50">
-      <Board fetchedCards={cards} />
+      <Board cards={cards} setCards={setCards} />
     </div>
   );
 };
 
-const Board = ({fetchedCards}) => {
-  const [cards, setCards] = useState(fetchedCards);
-
+const Board = ({cards,setCards}) => {
   const handleStatusChange = async (detailId,newStatus) => {
     try {
       const response = await fetch(`/api/orders/detail-status/${detailId}`, {
@@ -258,7 +279,7 @@ const Column = ({ title, headingColor, cards, column, setCards,onUpdateCardStatu
           return <Card key={c.id} {...c} handleDragStart={handleDragStart} />;
         })}
         <DropIndicator beforeId={null} column={column} />
-        <AddCard column={column} setCards={setCards} />
+        {/* <AddCard column={column} setCards={setCards} /> */}
       </div>
     </div>
   );

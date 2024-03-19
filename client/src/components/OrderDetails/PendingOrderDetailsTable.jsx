@@ -12,7 +12,7 @@ function PendingOrderDetailsTable() {
           setError(null); // Reset previous errors
     
           try {
-            const response = await fetch('http://localhost:8085/api/orders/pending');
+            const response = await fetch('/api/orders/pending');
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }

@@ -8,13 +8,17 @@ const {
   updateOrderDetailStatus,
   getAllOrderDetails,
   appendDetailsToOrder,
+  getOrderById,
 } = require("../controllers/order.controller");
+const { get } = require("mongoose");
 
 router.get("/", getAllOrders);
 // Route for fetching orders by status
 router.get("/orderdetails", getAllOrderDetails);
+// Route for fetching order by id
+router.get("/order/:orderId", getOrderById);
 // Route for creating a new order
-router.post("/create-order/:tableId", createNewOrder);
+router.post("/create-order/:tableId/people/:numberOfPeople", createNewOrder);
 // Route for fetching orders by status
 router.get("/:status", getOrderDetailsByStatus);
 // Route for appending a detail to an order
@@ -100,7 +104,7 @@ module.exports = router;
  */
 /**
  * @swagger
- * /api/orders/create-order/{tableId}:
+ * /api/orders/create-order/{tableId}/people/{numberOfPeople}:
  *   post:
  *     summary: create an order (or open table for customers)
  *     description: Returns a list of orders, each with its details including product information, quantity, unit price, and status.
@@ -112,6 +116,13 @@ module.exports = router;
  *         schema:
  *           type: number
  *         description: Id Of the table which order going to be created.
+ *       - in: path
+ *         name: numberOfPeople
+ *         required: true
+ *         schema:
+ *           type: number
+ *         description: number of people which order going to be created.
+ *
  *     responses:
  *       200:
  *         description: A JSON array of orders

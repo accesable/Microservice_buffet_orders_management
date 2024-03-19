@@ -14,6 +14,9 @@ namespace PaymentService.Models
         [Column("order_id", TypeName = "varchar(128)")]
         [Required]
         public string ? OrderId { get; set; }
+        public string Status { get; set; } = "completed";
+        [Column("createdAt")]
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
 
     }
 }

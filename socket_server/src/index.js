@@ -5,7 +5,7 @@ const initializeMyWebSocket = require("./websocket/websocket");
 const bodyParser = require("body-parser");
 const connectDB = require("./db/database");
 const routes = require("./api/routes");
-const cros = require("cors");
+const cors = require("cors");
 const swaggerJsdoc = require("swagger-jsdoc");
 const swaggerUi = require("swagger-ui-express");
 
@@ -38,10 +38,8 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(cros(corsOptions));
-app.use(bodyParser.json());
+app.use(cors(corsOptions));
 app.use(express.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", routes);
 
