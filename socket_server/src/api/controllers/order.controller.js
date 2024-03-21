@@ -7,6 +7,8 @@ const {
   getOrderDetails,
   addDetailsToOrder,
   getOrderById,
+  updateOrderStatus,
+  getOrdersByStatus,
 } = require("../services/orderService");
 
 exports.getAllOrders = async (req, res) => {
@@ -17,6 +19,33 @@ exports.getAllOrders = async (req, res) => {
     res
       .status(500)
       .json({ message: "Error fetching orders", error: error.message });
+  }
+};
+
+exports.getOrdersByStatus = async (req, res) => {
+  try {
+    const orders = await getOrdersByStatus(req.params.status);
+    res.json(orders);
+  } catch (error) {
+    res
+      .status(500)
+      .json({
+        message: "Error fetching orders by status",
+        error: error.message,
+      });
+  }
+};
+
+exports.updateOrderStatus = async (req, res) => {
+  try {
+    console.log("req.params.orderId", req.params.orderId);
+    console.log("req.body.status", req.body.status);
+    await updateOrderStatus(req.params.orderId, req.body.status);
+    res.json({ message: `Order ${req.params.orderId} status updated` });
+  } catch (error) {
+    res
+      .status(500)
+      .json({ message: "Error updating order status", error: error.message });
   }
 };
 

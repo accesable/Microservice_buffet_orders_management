@@ -19,7 +19,7 @@ function Menu() {
         const fetchItems = async () => {
           try {
             // Using Fetch API to get the data
-            const response = await fetch('https://localhost:7120/api/Items');
+            const response = await fetch('/api/Items');
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }

@@ -17,6 +17,16 @@ export default defineConfig({
         secure: false,
         changeOrigin: true,
       },
+      "/api/Payments": {
+        target: "https://localhost:7101",
+        secure: false,
+        changeOrigin: true,
+      },
+      "/api/Items": {
+        target: "https://localhost:7120",
+        secure: false,
+        changeOrigin: true,
+      },
     },
   },
   plugins: [react()],

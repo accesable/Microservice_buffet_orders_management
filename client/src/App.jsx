@@ -15,6 +15,7 @@ import Orders from './pages/Orders';
 import OrderDetails from './pages/OrderDetails';
 import Test from './pages/Test';
 import Payment from './pages/Payment';
+import Serving from './pages/Serving';
 const App = () => {
   return (
     <BrowserRouter>
@@ -25,14 +26,16 @@ const App = () => {
         <Route path="/projects" element={<Project />} />
         <Route path="/signin" element={<Signin />} />
         <Route path="/signup" element={<SignUp />} />
-        <Route path="/menu/:orderId" element={<Menu />} />
+        
         <Route path="/payment/:orderId" element={<Payment />} />
+
+        <Route element={<PrivateRoute />}>
+        <Route path="/menu/:orderId" element={<Menu />} />
         <Route path="/orders" element={<Orders />} />
         <Route path="/orderdetails" element={<OrderDetails />} />
-        <Route path="/test" element={<Test />} />
+        <Route path="/chief" element={<Test />} />
         <Route path='/dashboard' element={<Dashboard />} />
-        <Route element={<PrivateRoute />}>
-          
+        <Route path='/inserve' element={<Serving />} />
         </Route>
         
       </Routes>

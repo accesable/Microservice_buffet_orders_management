@@ -46,11 +46,11 @@ function Header() {
                             user@gmail.com
                         </div>
                     </Dropdown.Header>
-                    <Link to={'/dashboard?tab=profile'}>
+                    {/* <Link to={'/dashboard?tab=profile'}>
                         <Dropdown.Item>
                             Profile
                         </Dropdown.Item>
-                    </Link>
+                    </Link> */}
                     <Dropdown.Divider />
                     <Dropdown.Item>Sign Out</Dropdown.Item>
 

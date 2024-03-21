@@ -1,7 +1,7 @@
 import React,{useState} from 'react';
 import { Button, Modal,Alert } from 'flowbite-react';
 
-const PaymentModal = ({ order, showModal,setShowModal }) => {
+const PaymentModal = ({fetchOrders, order, showModal,setShowModal }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [status ,setStatus] = useState('');
@@ -11,7 +11,7 @@ const PaymentModal = ({ order, showModal,setShowModal }) => {
     setError(null);
 
     try {
-      const response = await fetch(`https://localhost:7101/api/Payments?numberOfPeople=${order.numberOfPeople}&pricePerPerson=40`, {
+      const response = await fetch(`/api/Payments?numberOfPeople=${order.numberOfPeople}&pricePerPerson=40`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,8 +27,25 @@ const PaymentModal = ({ order, showModal,setShowModal }) => {
       }
 
       // Handle the response data as needed
+      const response2 = await fetch(`/api/orders/update-order-status/${order._id}`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'accept': 'text/plain'
+        },
+        body: JSON.stringify({
+          "status": "finished"
+        }),
+      });
+
+      if (!response2.ok) {
+        throw new Error('Network response was not ok');
+      }
+
       const data = await response.text();
+      const data1 = await response2.text();
       console.log('Payment confirmed:', data);
+      console.log('Payment confirmed:', data1);
 
       setStatus('success');
       setMessage('Payment confirmed successfully');
@@ -41,6 +58,7 @@ const PaymentModal = ({ order, showModal,setShowModal }) => {
       setLoading(false);
       // Close the modal after payment confirmation
       setShowModal(false);
+      fetchOrders();
     }
   };
   if (!order) {

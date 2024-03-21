@@ -6,4 +6,5 @@ export const statusBadgeMap = {
   out: { color: "failure", text: "This Food Item is out of ingredients" },
   prepare: { color: "info", text: "This Food Item is being cooked" },
   in_serve: { color: "info", text: "This Food Item is ready to served" },
+  served: { color: "success", text: "This Food Item is already served" },
 };

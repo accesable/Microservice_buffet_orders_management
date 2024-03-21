@@ -9,14 +9,19 @@ const {
   getAllOrderDetails,
   appendDetailsToOrder,
   getOrderById,
+  updateOrderStatus,
+  getOrdersByStatus,
 } = require("../controllers/order.controller");
 const { get } = require("mongoose");
 
 router.get("/", getAllOrders);
 // Route for fetching orders by status
+router.get("/orderstatus/:status", getOrdersByStatus);
 router.get("/orderdetails", getAllOrderDetails);
 // Route for fetching order by id
 router.get("/order/:orderId", getOrderById);
+// Route for update orders status
+router.put("/update-order-status/:orderId", updateOrderStatus);
 // Route for creating a new order
 router.post("/create-order/:tableId/people/:numberOfPeople", createNewOrder);
 // Route for fetching orders by status

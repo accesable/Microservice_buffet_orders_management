@@ -14,6 +14,14 @@ const createOrder = async (tableId, numberOfPeople) => {
   return order_id;
 };
 
+const getOrdersByStatus = async (status) => {
+  return Order.find({ currentStatus: status }).populate("orderdetails");
+};
+
+const updateOrderStatus = async (orderId, status) => {
+  await Order.findByIdAndUpdate(orderId, { currentStatus: status });
+};
+
 const getOrderById = async (orderId) => {
   const order = await Order.findById(orderId);
   return order;
@@ -111,4 +119,6 @@ module.exports = {
   getOrderDetails,
   addDetailsToOrder,
   getOrderById,
+  updateOrderStatus,
+  getOrdersByStatus,
 };

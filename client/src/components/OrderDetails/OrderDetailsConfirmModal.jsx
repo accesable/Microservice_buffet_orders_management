@@ -22,8 +22,20 @@ function OrderDetailsConfirmModal({ openModal, setOpenModal ,orderId }) {
 
     const handleConfirmDetails = async () => {
       const details = { orderId : orderId, listDetails : cartItems}
-      socket.emit('add details',details);
-      dispatch(clearCart());
+      dispatch(setLoading(true));
+      try {
+        socket.emit('add details',details);
+        dispatch(clearCart());
+        dispatch(setError(null));
+        setStatus('success');
+        setMessage('Order Details confirmed successfully');
+      } catch (error) {
+        dispatch(setError('There was a problem with the fetch operation'));
+        setStatus('failure');
+        setMessage('There was a problem with the fetch operation');
+      }finally {
+        dispatch(setLoading(false));
+      }
       // dispatch(setLoading(true));
       // try {
       //     const response = await fetch(`/api/orders/append-details/${orderId}`, {
@@ -47,15 +59,15 @@ function OrderDetailsConfirmModal({ openModal, setOpenModal ,orderId }) {
 
       //     // Optionally clear the cart after successful confirmation
       //     dispatch(clearCart());
-      //     dispatch(setError(null));
-      //     setStatus('success');
-      //     setMessage('Order Details confirmed successfully');
+          // dispatch(setError(null));
+          // setStatus('success');
+          // setMessage('Order Details confirmed successfully');
 
       // } catch (error) {
       //     console.error('There was a problem with the fetch operation:', error);
-      //     dispatch(setError('There was a problem with the fetch operation'));
-      //     setStatus('failure');
-      //     setMessage('There was a problem with the fetch operation');
+          // dispatch(setError('There was a problem with the fetch operation'));
+          // setStatus('failure');
+          // setMessage('There was a problem with the fetch operation');
       // } finally {
       //   dispatch(setLoading(false));
       // }
@@ -78,7 +90,7 @@ function OrderDetailsConfirmModal({ openModal, setOpenModal ,orderId }) {
         <List>
           {cartItems.map((item, index) => (
             <List.Item key={index}>
-              Dish name : <span className='font-bold'>{item.itemName}</span> - Price $<span className='font-bold'>{item.itemPrice}</span> x {item.quantity} <span className='font-bold'>(Total: ${item.totalPrice.toFixed(2)})</span>
+              Dish name : <span className='font-bold'>{item.itemName}</span> x {item.quantity}
             </List.Item>
           ))}
         </List>

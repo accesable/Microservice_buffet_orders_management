@@ -13,8 +13,8 @@ const orderSchema = new mongoose.Schema({
   numberOfPeople: Number,
   currentStatus: {
     type: String,
-    enum: ["free", "occupied", "reserved"],
-    default: "free",
+    enum: ["free", "occupied", "reserved", "finished"],
+    default: "occupied",
   },
 });
 

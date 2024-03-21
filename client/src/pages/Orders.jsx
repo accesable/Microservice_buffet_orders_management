@@ -5,6 +5,7 @@ import {statusBadgeMap} from '../components/statusBadgeMap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import PaymentModal from '../components/PaymentModal';
+import { MdDone } from "react-icons/md";
 function Orders() {
   const [table, setTable] = useState(0);
   const [numberOfPeople, setNumberOfPeople] = useState(0);
@@ -28,7 +29,7 @@ function Orders() {
       setError(null); // Reset previous errors
 
       try {
-        const response = await fetch('/api/orders');
+        const response = await fetch('/api/orders/orderstatus/occupied');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -43,7 +44,6 @@ function Orders() {
 
 
     useEffect(() => {
-
     
         fetchOrders();
       }, []);
@@ -97,7 +97,7 @@ function Orders() {
   return (
 
     <div className='flex justify-center'>
-        <PaymentModal order={selectedOrder} showModal={showModal} setShowModal={setShowModal}  />
+        <PaymentModal order={selectedOrder} showModal={showModal} fetchOrders={fetchOrders} setShowModal={setShowModal}  />
 
         <Table hoverable>
         <Table.Head>
