@@ -1,9 +1,9 @@
 import React,{useState} from 'react'
-import { Card } from 'flowbite-react'
+import { Badge, Card } from 'flowbite-react'
 import { Button } from 'flowbite-react'
 import { useDispatch } from 'react-redux';
 import { addToCart } from '../redux/cartReducer';
-function FoodCard({itemId,itemName,itemDescription,itemPrice,itemImage}) {
+function FoodCard({itemId,itemName,itemDescription,itemPrice,itemImage,isLocked,isCharged}) {
 
     const [quantity, setQuantity] = useState(1);
     const dispatch = useDispatch();
@@ -26,7 +26,7 @@ function FoodCard({itemId,itemName,itemDescription,itemPrice,itemImage}) {
         <Card
         key={itemId}
         id={itemId}
-        className="max-w-sm "
+        className="max-w-sm opacity-90 hover:opacity-100"
         imgAlt="Meaningful alt text for an image that is not purely decorative"
         imgSrc={`http://localhost:5267/ImageStaticFiles${itemImage}`}
         >
@@ -37,11 +37,14 @@ function FoodCard({itemId,itemName,itemDescription,itemPrice,itemImage}) {
         <p className="font-normal text-gray-700 dark:text-gray-400">
             {itemDescription}
         </p>
-        {/* <p className="font-bold text-gray-900 dark:text-white">
-            ${itemPrice}
+        {/* {isCharged &&
+        <p className="font-bold text-gray-900 dark:text-white">
+            <Badge className='inline'>This Food Item is Charged ${itemPrice}</Badge> 
+        </p> } */}
 
-        </p> */}
         <div className="flex flex-wrap gap-2">
+            {isLocked ? <Badge color='failure' className='text-lg'>This Food Item is not Available</Badge> : 
+              <>
             <Button
             className="text-gray-900 dark:text-white bg-gray-100 dark:bg-gray-800"
             onClick={handleAddToCart}
@@ -51,6 +54,8 @@ function FoodCard({itemId,itemName,itemDescription,itemPrice,itemImage}) {
 
             <input type="number" name="quantity" min={1} max={5} id="quantity" className='rounded-xl w-15' value={quantity} // Controlled component
       onChange={handleChange} />
+              </>
+            }
         </div>
         </Card>
     </div>

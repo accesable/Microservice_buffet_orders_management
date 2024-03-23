@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { FaFire } from "react-icons/fa";
 import LoadingSpinner from "./LoadingSpinner";
 import io from 'socket.io-client';
+import fetchWithAuth from "../services/fetchWithAuth";
 
 export const CustomKanban = () => {
     const [orderdetails, setOrderDetails] = useState([]);
@@ -36,7 +37,7 @@ export const CustomKanban = () => {
           setIsLoading(true);
           setError(null); // Reset previous errors
           try {
-            const response = await fetch('/api/orders/orderdetails');
+            const response = await fetchWithAuth('/api/orders/orderdetails');
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -81,7 +82,7 @@ export const CustomKanban = () => {
 const Board = ({cards,setCards}) => {
   const handleStatusChange = async (detailId,newStatus) => {
     try {
-      const response = await fetch(`/api/orders/detail-status/${detailId}`, {
+      const response = await fetchWithAuth(`/api/orders/detail-status/${detailId}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

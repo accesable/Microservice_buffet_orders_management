@@ -25,7 +25,7 @@ exports.authenticateUser = async (username, password) => {
   const user = await User.findOne({ where: { username: username } });
   if (user && (await bcrypt.compare(password, user.password))) {
     const token = await this.generateAccessToken(user.id, user.username);
-    return { token: token, userId: user.id };
+    return { token: token, userId: user.id, imageURL: user.imageURL };
   }
   console.log("User not found or password incorrect");
   return null;
@@ -36,7 +36,7 @@ exports.generateAccessToken = async (userId, username) => {
     const accessToken = jwt.sign(
       { userId: userId, username: username },
       process.env.JWT_SECRET,
-      { expiresIn: "15m" }
+      { expiresIn: "1h" }
     );
     return accessToken;
   } catch (error) {

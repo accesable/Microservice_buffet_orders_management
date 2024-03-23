@@ -67,41 +67,43 @@ services:
     networks:
       - my_custom_network
 
-  # auth_server:
-  #   build: ./AuthServer
-  #   ports:
-  #     - "8086:8086"
-  #   environment:
-  #     DB_HOST: db
-  #     REDIS_HOST: myredis
-  #     REDIS_PORT: 6379
-  #     DB_USERNAME: root
-  #     DB_PASSWORD: my-secret-pw
-  #     JWT_SECRET: edwyg4aebo
-  #     JWT_REFRESH_SECRET: 2e0d94835e4f76eff03f6bdff49e37f3c433719ffa27e4aba8e18266ef7c2d45
-  #     DB_NAME: express_auth_server
-  #   networks:
-  #     - my_custom_network
-  #   depends_on:
-  #     - db
-  #     - redis
+  auth_server:
+    build: ./AuthServer
+    ports:
+      - "8086:8086"
+    environment:
+      DB_HOST: db
+      REDIS_HOST: myredis
+      REDIS_PORT: 6379
+      DB_USERNAME: root
+      DB_PASSWORD: my-secret-pw
+      JWT_SECRET: edwyg4aebo
+      JWT_REFRESH_SECRET: 2e0d94835e4f76eff03f6bdff49e37f3c433719ffa27e4aba8e18266ef7c2d45
+      DB_NAME: express_auth_server
+    networks:
+      - my_custom_network
+    depends_on:
+      - db
+      - redis
 
-  # socker_server:
-  #   build: ./socket_server  # Ensure the image name and tag are correct
-  #   ports:
-  #     - "8085:8085"
-  #   environment:
-  #     PORT: 8085
-  #     DB_USERNAME: mongoadmin
-  #     DB_PASSWORD: mongoadminpassword
-  #     DB_HOST: mongodb
-  #     DB_PORT: 27017
-  #     DB_NAME: order_service
-  #   networks:
-  #     - my_custom_network
-  #   depends_on:
-  #     - db
-  #     - redis
+  socket_server:
+    build: ./socket_server  # Ensure the image name and tag are correct
+    ports:
+      - "8085:8085"
+    environment:
+      PORT: 8085
+      DB_USERNAME: mongoadmin
+      DB_PASSWORD: mongoadminpassword
+      DB_HOST: mongodb
+      DB_PORT: 27017
+      DB_NAME: order_service
+      JWT_SECRET: edwyg4aebo
+      JWT_REFRESH_SECRET: 2e0d94835e4f76eff03f6bdff49e37f3c433719ffa27e4aba8e18266ef7c2d45
+    networks:
+      - my_custom_network
+    depends_on:
+      - db
+      - redis
 
 networks:
   my_custom_network:

@@ -1,12 +1,13 @@
 import React,{useState,useEffect} from 'react'
 import { useParams } from 'react-router-dom';
+import fetchWithAuth from '../services/fetchWithAuth';
 function Payment() {
     const { orderId } = useParams();
     const [order,setOrder] = useState({});
     useEffect(() => {
       const fetchOrder = async () => {
         try {
-          const response = await fetch(`/api/orders/order/${orderId}`);
+          const response = await fetchWithAuth(`/api/orders/order/${orderId}`);
           if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
           }

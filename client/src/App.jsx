@@ -30,12 +30,12 @@ const App = () => {
         <Route path="/payment/:orderId" element={<Payment />} />
 
         <Route element={<PrivateRoute />}>
-        <Route path="/menu/:orderId" element={<Menu />} />
-        <Route path="/orders" element={<Orders />} />
-        <Route path="/orderdetails" element={<OrderDetails />} />
-        <Route path="/chief" element={<Test />} />
-        <Route path='/dashboard' element={<Dashboard />} />
-        <Route path='/inserve' element={<Serving />} />
+          <Route path="/menu/:orderId" element={<Menu />} />
+          <Route path="/orders" element={<Orders />} />
+          <Route path="/orderdetails" element={<OrderDetails />} />
+          <Route path="/chief" element={<Test />} />
+          <Route path='/dashboard' element={<Dashboard />} />
+          <Route path='/inserve' element={<Serving />} />
         </Route>
         
       </Routes>

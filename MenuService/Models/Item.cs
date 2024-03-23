@@ -21,5 +21,7 @@ namespace WebApplication1.Models
         public int CategoryId { get; set; }
         [OpenApiIgnore]
         public Category ? Category { get; set; }
+        public bool IsLocked { get; set; } = false;
+        public bool IsCharged { get; set; } = false;
     }
 }

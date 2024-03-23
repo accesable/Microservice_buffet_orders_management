@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
@@ -45,7 +46,9 @@ namespace WebApplication1.Controllers
                     {
                         ImageId = img.ImageId,
                         ImageUrl = img.ImageUrl
-                    }).ToList()
+                    }).ToList(),
+                    IsCharged = item.IsCharged,
+                    IsLocked = item.IsLocked,
                 }).ToListAsync();
             return items;
         }
@@ -62,6 +65,27 @@ namespace WebApplication1.Controllers
             }
 
             return item;
+        }
+        [HttpPut("status/{id}")]
+        public async Task<ActionResult<Item>> GetItemStatus(int id, [Required] string status)
+        {
+            var item = await _context.Items.FindAsync(id);
+
+            if (item == null)
+            {
+                return NotFound();
+            }
+            if (status == "lock")
+            {
+                item.IsLocked = true;
+            }
+            else if (status == "unlock")
+            {
+                item.IsLocked = false;
+            }
+            await _context.SaveChangesAsync();
+
+            return Ok(new { item.IsLocked });
         }
 
         // PUT: api/Items/5
@@ -107,6 +131,7 @@ namespace WebApplication1.Controllers
                 ItemDescription = itemRequest.ItemDescription,
                 OriginalPrice=itemRequest.OriginalPrice,
                 CategoryId = itemRequest.CategoryId ,
+                IsCharged = itemRequest.IsCharged,
                 Images = new List<Image>()
             };
             _context.Items.Add(insertedItem);

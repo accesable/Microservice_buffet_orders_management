@@ -5,7 +5,7 @@ import {statusBadgeMap} from '../components/statusBadgeMap';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import PaymentModal from '../components/PaymentModal';
-import { MdDone } from "react-icons/md";
+import fetchWithAuth from '../services/fetchWithAuth';
 function Orders() {
   const [table, setTable] = useState(0);
   const [numberOfPeople, setNumberOfPeople] = useState(0);
@@ -29,7 +29,7 @@ function Orders() {
       setError(null); // Reset previous errors
 
       try {
-        const response = await fetch('/api/orders/orderstatus/occupied');
+        const response = await fetchWithAuth('/api/orders/orderstatus/occupied');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -58,7 +58,7 @@ function Orders() {
       };
       const handleCreateOrder = async () => {
         try {
-          const response = await fetch(`/api/orders/create-order/${table}/people/${numberOfPeople}`, {
+          const response = await fetchWithAuth(`/api/orders/create-order/${table}/people/${numberOfPeople}`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

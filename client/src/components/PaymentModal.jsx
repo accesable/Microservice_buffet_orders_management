@@ -1,6 +1,6 @@
 import React,{useState} from 'react';
 import { Button, Modal,Alert } from 'flowbite-react';
-
+import fetchWithAuth from '../services/fetchWithAuth';
 const PaymentModal = ({fetchOrders, order, showModal,setShowModal }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -11,7 +11,7 @@ const PaymentModal = ({fetchOrders, order, showModal,setShowModal }) => {
     setError(null);
 
     try {
-      const response = await fetch(`/api/Payments?numberOfPeople=${order.numberOfPeople}&pricePerPerson=40`, {
+      const response = await fetchWithAuth(`/api/Payments?numberOfPeople=${order.numberOfPeople}&pricePerPerson=40`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -27,7 +27,7 @@ const PaymentModal = ({fetchOrders, order, showModal,setShowModal }) => {
       }
 
       // Handle the response data as needed
-      const response2 = await fetch(`/api/orders/update-order-status/${order._id}`, {
+      const response2 = await fetchWithAuth(`/api/orders/update-order-status/${order._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',

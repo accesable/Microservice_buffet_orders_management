@@ -15,7 +15,7 @@ builder.Services.AddCors(options =>
     options.AddPolicy("AllowSpecificOrigin",
                builder => builder.WithOrigins("http://localhost:5173")
                                         .AllowAnyMethod()
-                                                                 .AllowAnyHeader());
+                                        .AllowAnyHeader());
 }); 
 builder.Services.AddDbContext<ApplicationDbContext>(
        options => options.UseMySQL(builder.Configuration.GetConnectionString("DefaultConnection"))

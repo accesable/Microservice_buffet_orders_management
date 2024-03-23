@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import FloatingButton from '../components/OrderDetails/FloatingAddDetailsBtn';
 import OrderDetailsConfirmModal from '../components/OrderDetails/OrderDetailsConfirmModal';
 import LoadingSpinner from '../components/LoadingSpinner';
+import fetchWithAuth from '../services/fetchWithAuth';
 function Menu() {
   const { orderId } = useParams();
     const [items, setItems] = useState([]);
@@ -19,7 +20,7 @@ function Menu() {
         const fetchItems = async () => {
           try {
             // Using Fetch API to get the data
-            const response = await fetch('/api/Items');
+            const response = await fetchWithAuth('/api/Items');
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }
@@ -46,6 +47,8 @@ function Menu() {
           itemName={item.itemName}
           itemDescription={item.itemDescription}
           itemPrice={item.originalPrice}
+          isLocked={item.isLocked}
+          isCharged={item.isCharged}
         />
       ))}
       <FloatingButton onClick={handleOpenModal}/>

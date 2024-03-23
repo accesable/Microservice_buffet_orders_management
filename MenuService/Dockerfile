@@ -3,21 +3,22 @@
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER app
 WORKDIR /app
-EXPOSE 8080
-EXPOSE 8081
+EXPOSE 8087
+EXPOSE 8088
 
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-COPY ["WebApplication1/WebApplication1.csproj", "WebApplication1/"]
-RUN dotnet restore "WebApplication1/WebApplication1.csproj"
+COPY ["ProductService.csproj", "ProductService/"]
+RUN dotnet restore "ProductService/ProductService.csproj"
+WORKDIR "/src/ProductService"
 COPY . .
-WORKDIR "/src/WebApplication1"
-RUN dotnet build "WebApplication1.csproj" -c Release -o /app/build
+RUN dotnet build "ProductService.csproj" -c Release -o /app/build
 
 FROM build AS publish
-RUN dotnet publish "WebApplication1.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "ProductService.csproj" -c Release -o /app/publish
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "WebApplication1.dll"]
+COPY ImageStaticFiles /app/ImageStaticFiles   
+ENTRYPOINT ["dotnet", "ProductService.dll"]

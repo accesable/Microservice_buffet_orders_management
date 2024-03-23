@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, Table } from 'flowbite-react';
-
+import fetchWithAuth from '../../services/fetchWithAuth';
 const FetchPayments = ({date}) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
@@ -17,7 +17,7 @@ const FetchPayments = ({date}) => {
         if (date) {
           url += `?date=${date.toISOString()}`;
         }
-        const response = await fetch(url, {
+        const response = await fetchWithAuth(url, {
           method: 'GET',
           headers: {
             'Accept': 'application/json'

@@ -15,5 +15,8 @@ namespace WebApplication1.Models.RequestModels
         public decimal OriginalPrice { get; set; }
 /*        public ICollection<ImageRequest>? Images { get; set; }*/
         public int CategoryId { get; set; }
+
+        [Required]
+        public bool IsCharged { get; set; } 
     }
 }

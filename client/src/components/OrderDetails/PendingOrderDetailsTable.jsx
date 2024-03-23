@@ -2,6 +2,7 @@ import React,{useEffect,useState} from 'react'
 import TableRowOrderDetailTable from './TableRowOrderDetailTable';
 import { Table } from 'flowbite-react'
 import LoadingSpinner from '../LoadingSpinner';
+import fetchWithAuth from '../../services/fetchWithAuth';
 function PendingOrderDetailsTable() {
     const [orderdetails, setOrderDetails] = useState([]);
     const [isloading, setIsLoading] = useState(true);
@@ -12,7 +13,7 @@ function PendingOrderDetailsTable() {
           setError(null); // Reset previous errors
     
           try {
-            const response = await fetch('/api/orders/pending');
+            const response = await fetchWithAuth('/api/orders/pending');
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }

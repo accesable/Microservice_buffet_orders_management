@@ -4,8 +4,18 @@ import { Link,useLocation } from 'react-router-dom'
 import {AiOutlineSearch} from 'react-icons/ai'
 import {FaMoon,FaCartPlus } from 'react-icons/fa'
 import { useSelector } from 'react-redux'
+import {SignOut} from '../redux/user/userSlice'
+import { useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 
 function Header() {
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+
+    const handleSignOut = () => {
+        dispatch(SignOut());
+        navigate('/');
+    }
     const path = useLocation().pathname
     const {currentUser} = useSelector(state => state.user)
   return (
@@ -36,7 +46,7 @@ function Header() {
                     label={
                         <Avatar
                          alt='user avatar'
-                         img='http://localhost:8086/images/users/User-1.jpg'
+                         img={`http://localhost:8086${currentUser.imageURL}`}
                         />
                     }
                 >
@@ -52,7 +62,7 @@ function Header() {
                         </Dropdown.Item>
                     </Link> */}
                     <Dropdown.Divider />
-                    <Dropdown.Item>Sign Out</Dropdown.Item>
+                    <Dropdown.Item onClick={handleSignOut}>Sign Out</Dropdown.Item>
 
                 </Dropdown>
             ) : (
@@ -70,10 +80,16 @@ function Header() {
                     <Link to='/'>Home</Link>
                 </Navbar.Link>
                 <Navbar.Link active={path === '/about'} as={'div'}>
-                    <Link to='/about'>About</Link>
+                    <Link to='/orders'>Orders</Link>
                 </Navbar.Link>
                 <Navbar.Link active={path === '/projects'} as={'div'}>
-                    <Link to='/projects'>Projects</Link>
+                    <Link to='/dashboard'>Report</Link>
+                </Navbar.Link>
+                <Navbar.Link active={path === '/projects'} as={'div'}>
+                    <Link to='/chief'>Chief</Link>
+                </Navbar.Link>
+                <Navbar.Link active={path === '/projects'} as={'div'}>
+                    <Link to='/inserve'>Servings</Link>
                 </Navbar.Link>
             </Navbar.Collapse>
     </Navbar>

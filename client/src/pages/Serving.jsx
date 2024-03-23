@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from 'react'
 import { Table,Button } from 'flowbite-react'
 import { MdDone } from "react-icons/md";
+import fetchWithAuth from '../services/fetchWithAuth';
 function Serving() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -9,7 +10,7 @@ function Serving() {
       setIsLoading(true);
       setError(null); // Reset previous errors
       try {
-        const response = await fetch('/api/orders/in_serve');
+        const response = await fetchWithAuth('/api/orders/in_serve');
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
@@ -23,7 +24,7 @@ function Serving() {
     };
     const handleServeButtonClick = async (orderId) => {
         try {
-            const response = await fetch(`/api/orders/detail-status/${orderId}`, {
+            const response = await fetchWithAuth(`/api/orders/detail-status/${orderId}`, {
                 method: 'PUT',
                 headers: {
                   'Content-Type': 'application/json',

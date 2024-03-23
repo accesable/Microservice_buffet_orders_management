@@ -42,10 +42,11 @@ exports.login = async (req, res) => {
       .json({ message: "Username and password are required" });
 
   try {
-    const { token: accessToken, userId } = await userService.authenticateUser(
-      username,
-      password
-    );
+    const {
+      token: accessToken,
+      userId,
+      imageURL,
+    } = await userService.authenticateUser(username, password);
     const refreshToken = await userService.generateRefreshToken(
       userId,
       username
@@ -55,6 +56,7 @@ exports.login = async (req, res) => {
       res.json({
         accessToken,
         refreshToken,
+        imageURL: imageURL.replace("public", ""),
         userId: userId,
         username: username,
       });
