@@ -14,8 +14,6 @@ function FoodCard({itemId,itemName,itemDescription,itemPrice,itemImage,isLocked,
     
         // Dispatch the action
         dispatch(addToCart(item));
-    
-        alert(`${itemName} added to cart!`); // Optional: for immediate user feedback
       };
       const handleChange = (event) => {
         const value = event.target.value;

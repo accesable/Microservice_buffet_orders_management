@@ -1,28 +1,37 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-// https://vitejs.dev/config/
+import { resolve } from "path";
+// Retrieve host information from environment variables or use default values
+const API_USERS_HOST = process.env.API_USERS_HOST || "http://localhost:8086";
+const API_ORDERS_HOST = process.env.API_ORDERS_HOST || "http://localhost:8085";
+const API_PAYMENTS_HOST =
+  process.env.API_PAYMENTS_HOST || "http://localhost:5211";
+const API_ITEMS_HOST = process.env.API_ITEMS_HOST || "http://localhost:5267";
+
 export default defineConfig({
   server: {
     proxy: {
-      // Proxy /api/user requests to localhost:3002
+      // Proxy /api/user requests to specified host
       "/api/users": {
-        target: "http://localhost:8086",
+        target: API_USERS_HOST,
         secure: false,
         changeOrigin: true,
       },
-      // Proxy /api/product requests to localhost:3001
+      // Proxy /api/orders requests to specified host
       "/api/orders": {
-        target: "http://localhost:8085",
+        target: API_ORDERS_HOST,
         secure: false,
         changeOrigin: true,
       },
-      "/api/Payments": {
-        target: "https://localhost:7101",
+      // Proxy /api/payments requests to specified host
+      "/api/payments": {
+        target: API_PAYMENTS_HOST,
         secure: false,
         changeOrigin: true,
       },
-      "/api/Items": {
-        target: "https://localhost:7120",
+      // Proxy /api/items requests to specified host
+      "/api/items": {
+        target: API_ITEMS_HOST,
         secure: false,
         changeOrigin: true,
       },

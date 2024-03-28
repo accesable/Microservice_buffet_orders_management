@@ -5,12 +5,17 @@ import FloatingButton from '../components/OrderDetails/FloatingAddDetailsBtn';
 import OrderDetailsConfirmModal from '../components/OrderDetails/OrderDetailsConfirmModal';
 import LoadingSpinner from '../components/LoadingSpinner';
 import fetchWithAuth from '../services/fetchWithAuth';
+import { useSelector } from 'react-redux';
 function Menu() {
   const { orderId } = useParams();
     const [items, setItems] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const {currentUser} = useSelector(state => state.user)
+    if(currentUser.roles.includes('Chief Staff')){
+      return <h1>Unauthorized Route</h1>
+    }
 
     const handleOpenModal = () => {
       setIsModalOpen(true);
@@ -37,6 +42,8 @@ function Menu() {
       }, []);
     if (loading) return <div><LoadingSpinner/></div>;
     if (error) return <div>Error: {error.message}</div>;
+
+
   return (
     <div className='flex flex-wrap gap-4 justify-start'>
 {items.map((item) => (

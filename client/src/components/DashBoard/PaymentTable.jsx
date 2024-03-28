@@ -13,7 +13,7 @@ const FetchPayments = ({date}) => {
 
       try {
         console.log('Fetching payments :', date);
-        let url = 'https://localhost:7101/api/Payments';
+        let url = '/api/Payments';
         if (date) {
           url += `?date=${date.toISOString()}`;
         }

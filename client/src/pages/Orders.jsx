@@ -6,6 +6,7 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import PaymentModal from '../components/PaymentModal';
 import fetchWithAuth from '../services/fetchWithAuth';
+import { useSelector } from 'react-redux';
 function Orders() {
   const [table, setTable] = useState(0);
   const [numberOfPeople, setNumberOfPeople] = useState(0);
@@ -17,6 +18,11 @@ function Orders() {
     const [selectedOrder, setSelectedOrder] = useState(null);
   const [showModal, setShowModal] = useState(false);
 
+
+  const {currentUser} = useSelector(state => state.user)
+  if(currentUser.roles.includes('Chief Staff')){
+    return <h1>Unauthorized Route</h1>
+  }
 
   const handlePaymentButtonClick = (order) => {
     setSelectedOrder(order);
@@ -41,6 +47,7 @@ function Orders() {
         setIsLoading(false);
       }
     };
+
 
 
     useEffect(() => {
@@ -93,6 +100,8 @@ function Orders() {
       if (error) {
         return <div>Error: {error}</div>;
       }
+
+
 
   return (
 

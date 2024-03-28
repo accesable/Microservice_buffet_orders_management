@@ -1,6 +1,7 @@
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const User = require("../models/user.model");
+const sequelize = require("../../config/db/database");
 const { redisClient } = require("../../config/db/redisClient");
 exports.createUser = async (username, password, firstname, lastname, email) => {
   const hashedPassword = await bcrypt.hash(password, 10);
@@ -24,19 +25,39 @@ exports.createUser = async (username, password, firstname, lastname, email) => {
 exports.authenticateUser = async (username, password) => {
   const user = await User.findOne({ where: { username: username } });
   if (user && (await bcrypt.compare(password, user.password))) {
-    const token = await this.generateAccessToken(user.id, user.username);
-    return { token: token, userId: user.id, imageURL: user.imageURL };
+    const roles = await sequelize.query(
+      `SELECT r.name FROM roles r
+       INNER JOIN user_roles ur ON r.id = ur.roleId
+       WHERE ur.userId = :userId`,
+      {
+        replacements: { userId: user.id },
+        type: sequelize.QueryTypes.SELECT,
+      }
+    );
+    // Map roles to an array of role names
+    const roleNames = roles.map((role) => role.name);
+    const token = await this.generateAccessToken(
+      user.id,
+      user.username,
+      roleNames
+    );
+    return {
+      token: token,
+      userId: user.id,
+      imageURL: user.imageURL,
+      roles: roleNames,
+    };
   }
   console.log("User not found or password incorrect");
   return null;
 };
 
-exports.generateAccessToken = async (userId, username) => {
+exports.generateAccessToken = async (userId, username, roles) => {
   try {
     const accessToken = jwt.sign(
-      { userId: userId, username: username },
+      { userId: userId, username: username, roles },
       process.env.JWT_SECRET,
-      { expiresIn: "1h" }
+      { expiresIn: "1d" }
     );
     return accessToken;
   } catch (error) {

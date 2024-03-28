@@ -46,6 +46,7 @@ exports.login = async (req, res) => {
       token: accessToken,
       userId,
       imageURL,
+      roles,
     } = await userService.authenticateUser(username, password);
     const refreshToken = await userService.generateRefreshToken(
       userId,
@@ -59,6 +60,7 @@ exports.login = async (req, res) => {
         imageURL: imageURL.replace("public", ""),
         userId: userId,
         username: username,
+        roles,
       });
     } else {
       res.status(401).send({ message: "Authentication failed" });
@@ -74,7 +76,7 @@ exports.getUser = async (req, res) => {
 };
 
 exports.protectedRoute = (req, res) => {
-  res.send("This route is protected");
+  res.json({ message: "This route is protected" });
 };
 
 exports.refreshToken = async (req, res) => {
