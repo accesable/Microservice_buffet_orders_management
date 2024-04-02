@@ -7,6 +7,7 @@ import { IoIosAddCircleOutline } from "react-icons/io";
 import PaymentModal from '../components/PaymentModal';
 import fetchWithAuth from '../services/fetchWithAuth';
 import { useSelector } from 'react-redux';
+import NotFounded from '../components/NotFounded';
 function Orders() {
   const [table, setTable] = useState(0);
   const [numberOfPeople, setNumberOfPeople] = useState(0);
@@ -21,7 +22,9 @@ function Orders() {
 
   const {currentUser} = useSelector(state => state.user)
   if(currentUser.roles.includes('Chief Staff')){
-    return <h1>Unauthorized Route</h1>
+    return (
+      <NotFounded/>
+    )
   }
 
   const handlePaymentButtonClick = (order) => {
@@ -105,7 +108,7 @@ function Orders() {
 
   return (
 
-    <div className='flex justify-center'>
+    <div className='flex justify-center h-screen overflow-y-auto'>
         <PaymentModal order={selectedOrder} showModal={showModal} fetchOrders={fetchOrders} setShowModal={setShowModal}  />
 
         <Table hoverable>

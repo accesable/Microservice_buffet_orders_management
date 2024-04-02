@@ -16,6 +16,7 @@ const FetchPayments = ({date}) => {
         let url = '/api/Payments';
         if (date) {
           url += `?date=${date.toISOString()}`;
+          console.log(date.toISOString())
         }
         const response = await fetchWithAuth(url, {
           method: 'GET',

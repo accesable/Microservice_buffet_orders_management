@@ -24,16 +24,16 @@ export default defineConfig({
         changeOrigin: true,
       },
       // Proxy /api/payments requests to specified host
-      "/api/payments": {
+      "/api/Payments": {
         target: API_PAYMENTS_HOST,
         secure: false,
         changeOrigin: true,
       },
       // Proxy /api/items requests to specified host
-      "/api/items": {
+      "/api/Items": {
         target: API_ITEMS_HOST,
-        secure: false,
         changeOrigin: true,
+        secure: false,
       },
     },
   },

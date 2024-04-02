@@ -34,3 +34,4 @@ Using `jsonwebtoken` for creating an Authentication Service with MySQL and Redis
     __v: 0
 }
 ```
+## [API Documentation Link](https://documenter.getpostman.com/view/26829759/2sA35HY1yj#ef948698-3a5f-4eaa-820f-0adf08fc9212)

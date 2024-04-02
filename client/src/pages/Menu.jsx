@@ -6,6 +6,7 @@ import OrderDetailsConfirmModal from '../components/OrderDetails/OrderDetailsCon
 import LoadingSpinner from '../components/LoadingSpinner';
 import fetchWithAuth from '../services/fetchWithAuth';
 import { useSelector } from 'react-redux';
+import NotFounded from '../components/NotFounded';
 function Menu() {
   const { orderId } = useParams();
     const [items, setItems] = useState([]);
@@ -14,7 +15,7 @@ function Menu() {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const {currentUser} = useSelector(state => state.user)
     if(currentUser.roles.includes('Chief Staff')){
-      return <h1>Unauthorized Route</h1>
+      return <NotFounded/>
     }
 
     const handleOpenModal = () => {
@@ -25,7 +26,9 @@ function Menu() {
         const fetchItems = async () => {
           try {
             // Using Fetch API to get the data
-            const response = await fetchWithAuth('/api/Items');
+            const response = await fetchWithAuth('/api/Items',{
+              method:'GET',
+            });
             if (!response.ok) {
               throw new Error(`HTTP error! status: ${response.status}`);
             }

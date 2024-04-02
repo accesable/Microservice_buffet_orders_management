@@ -28,7 +28,7 @@ const getOrderById = async (orderId) => {
 };
 
 const getOrderDetails = async () => {
-  const reval = await OrderDetail.find({});
+  const reval = await OrderDetail.find({ status: "occupied" });
   return reval;
 };
 const getOrders = async () => {

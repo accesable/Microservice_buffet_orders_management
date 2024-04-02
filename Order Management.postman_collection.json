@@ -1,0 +1,999 @@
+{
+	"info": {
+		"_postman_id": "c7092ce6-aeca-4885-8773-b1f3a4aa9a48",
+		"name": "Order Management",
+		"description": "This API documentations is specified in a order management of an buffet restaurant",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "26829759"
+	},
+	"item": [
+		{
+			"name": "Employee Login",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"password\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{auth_base_url}}/api/users/login",
+					"host": [
+						"{{auth_base_url}}"
+					],
+					"path": [
+						"api",
+						"users",
+						"login"
+					]
+				},
+				"description": "API endpoint for authenticating user with JWT token . And All the remaining requests must the `Authorization : Bearer` for accessing the API resources."
+			},
+			"response": [
+				{
+					"name": "Employee Login example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"user1\",\r\n    \"password\": \"password\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8086/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8086",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "543"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"21f-OLHyHTw4TPsFO4utVoUkM230N5g\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 02:27:01 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"accessToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoidXNlcjEiLCJyb2xlcyI6WyJ1c2VyIiwiYWRtaW4iLCJXYWl0ZXIiXSwiaWF0IjoxNzEyMDI0ODIxLCJleHAiOjE3MTIxMTEyMjF9.pc7Amz9-ED3SHr9fHiGKhvfz4QHdG8oeBKnEf6S1JdU\",\n    \"refreshToken\": \"eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoidXNlcjEiLCJ0eXAiOiJyZWZyZXNoIiwiaWF0IjoxNzEyMDI0ODIxLCJleHAiOjE3MTI2Mjk2MjF9.WUBCQS83xJSUtqSVis1WmJBblIbOjsDkX2pc1mg31mw\",\n    \"imageURL\": \"\\\\images\\\\users\\\\User-1.jpg\",\n    \"userId\": 1,\n    \"username\": \"user1\",\n    \"roles\": [\n        \"user\",\n        \"admin\",\n        \"Waiter\"\n    ]\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Order By Status",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{order_base_url}}/api/orders/orderstatus/:order_status",
+					"host": [
+						"{{order_base_url}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"orderstatus",
+						":order_status"
+					],
+					"variable": [
+						{
+							"key": "order_status",
+							"value": ""
+						}
+					]
+				},
+				"description": "Get order based on Status : `occupied` and `finished` state"
+			},
+			"response": [
+				{
+					"name": "Get Order By Status finished state example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/orders/orderstatus/finished",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"orders",
+								"orderstatus",
+								"finished"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:5173"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "8803"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"2263-jMF2n/nGWOHIOvjdvYwVHerUAVc\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 02:40:33 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": \"65fbdf5f2ed918715749da7e\",\n        \"created_at\": \"2024-03-21T07:18:55.273Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"65fbdf6c2ed918715749da82\",\n                \"itemId\": 4,\n                \"itemName\": \"Shrimp Tempura\",\n                \"quantity\": 2,\n                \"totalPrice\": 5.98,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-21T07:19:08.288Z\",\n                \"updatedAt\": \"2024-03-21T07:21:13.753Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fbdf6c2ed918715749da84\",\n                \"itemId\": 8,\n                \"itemName\": \"Thai Hotpot\",\n                \"quantity\": 1,\n                \"totalPrice\": 2.9,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-21T07:19:08.291Z\",\n                \"updatedAt\": \"2024-03-21T07:21:14.646Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fbdf6c2ed918715749da86\",\n                \"itemId\": 10,\n                \"itemName\": \"Raw Dipped Beef\",\n                \"quantity\": 1,\n                \"totalPrice\": 2,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-21T07:19:08.292Z\",\n                \"updatedAt\": \"2024-03-21T07:21:14.843Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 1,\n        \"numberOfPeople\": 2,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdf852ed918715749da90\",\n        \"created_at\": \"2024-03-21T07:19:33.612Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"65fbdf972ed918715749da95\",\n                \"itemId\": 6,\n                \"itemName\": \"Fried Pork\",\n                \"quantity\": 2,\n                \"totalPrice\": 7,\n                \"status\": \"served\",\n                \"table\": 2,\n                \"createdAt\": \"2024-03-21T07:19:51.367Z\",\n                \"updatedAt\": \"2024-03-21T07:21:15.049Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fbdf972ed918715749da97\",\n                \"itemId\": 9,\n                \"itemName\": \"Sipcy Mala Hotpot\",\n                \"quantity\": 1,\n                \"totalPrice\": 4,\n                \"status\": \"served\",\n                \"table\": 2,\n                \"createdAt\": \"2024-03-21T07:19:51.370Z\",\n                \"updatedAt\": \"2024-03-21T07:21:15.221Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fbdf972ed918715749da99\",\n                \"itemId\": 10,\n                \"itemName\": \"Raw Dipped Beef\",\n                \"quantity\": 1,\n                \"totalPrice\": 2,\n                \"status\": \"served\",\n                \"table\": 2,\n                \"createdAt\": \"2024-03-21T07:19:51.372Z\",\n                \"updatedAt\": \"2024-03-21T07:21:15.419Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 2,\n        \"numberOfPeople\": 1,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdfb52ed918715749daa1\",\n        \"created_at\": \"2024-03-21T07:20:21.747Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"65fbdfc42ed918715749daa6\",\n                \"itemId\": 4,\n                \"itemName\": \"Shrimp Tempura\",\n                \"quantity\": 2,\n                \"totalPrice\": 5.98,\n                \"status\": \"served\",\n                \"table\": 3,\n                \"createdAt\": \"2024-03-21T07:20:36.508Z\",\n                \"updatedAt\": \"2024-03-21T07:21:15.618Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fbdfc42ed918715749daa8\",\n                \"itemId\": 6,\n                \"itemName\": \"Fried Pork\",\n                \"quantity\": 2,\n                \"totalPrice\": 7,\n                \"status\": \"served\",\n                \"table\": 3,\n                \"createdAt\": \"2024-03-21T07:20:36.510Z\",\n                \"updatedAt\": \"2024-03-21T07:21:10.929Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fbdfc42ed918715749daaa\",\n                \"itemId\": 8,\n                \"itemName\": \"Thai Hotpot\",\n                \"quantity\": 1,\n                \"totalPrice\": 2.9,\n                \"status\": \"served\",\n                \"table\": 3,\n                \"createdAt\": \"2024-03-21T07:20:36.511Z\",\n                \"updatedAt\": \"2024-03-21T07:21:15.822Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fbdfc42ed918715749daac\",\n                \"itemId\": 9,\n                \"itemName\": \"Sipcy Mala Hotpot\",\n                \"quantity\": 1,\n                \"totalPrice\": 4,\n                \"status\": \"served\",\n                \"table\": 3,\n                \"createdAt\": \"2024-03-21T07:20:36.512Z\",\n                \"updatedAt\": \"2024-03-21T07:21:16.024Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fbdfc42ed918715749daae\",\n                \"itemId\": 10,\n                \"itemName\": \"Raw Dipped Beef\",\n                \"quantity\": 2,\n                \"totalPrice\": 4,\n                \"status\": \"served\",\n                \"table\": 3,\n                \"createdAt\": \"2024-03-21T07:20:36.513Z\",\n                \"updatedAt\": \"2024-03-21T07:21:16.539Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 3,\n        \"numberOfPeople\": 4,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fd575521cc0e105c82a0bb\",\n        \"created_at\": \"2024-03-22T10:03:01.555Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"65fd577521cc0e105c82a0bf\",\n                \"itemId\": 10,\n                \"itemName\": \"Raw Dipped Beef\",\n                \"quantity\": 1,\n                \"totalPrice\": 2,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-22T10:03:33.446Z\",\n                \"updatedAt\": \"2024-03-22T10:05:25.465Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fd577521cc0e105c82a0c1\",\n                \"itemId\": 7,\n                \"itemName\": \"Beef Milt\",\n                \"quantity\": 1,\n                \"totalPrice\": 5.34,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-22T10:03:33.451Z\",\n                \"updatedAt\": \"2024-03-22T10:04:50.725Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fd577521cc0e105c82a0c3\",\n                \"itemId\": 9,\n                \"itemName\": \"Sipcy Mala Hotpot\",\n                \"quantity\": 1,\n                \"totalPrice\": 4,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-22T10:03:33.453Z\",\n                \"updatedAt\": \"2024-03-22T10:04:58.055Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"65fd57db21cc0e105c82a0dd\",\n                \"itemId\": 4,\n                \"itemName\": \"Shrimp Tempura\",\n                \"quantity\": 1,\n                \"totalPrice\": 2.99,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-22T10:05:15.054Z\",\n                \"updatedAt\": \"2024-03-22T10:05:26.288Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 1,\n        \"numberOfPeople\": 2,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fe51bba690fc0730af6256\",\n        \"created_at\": \"2024-03-23T03:51:23.979Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"66011142dba434f30245ae18\",\n                \"itemId\": 7,\n                \"itemName\": \"Beef Milt\",\n                \"quantity\": 2,\n                \"totalPrice\": 10.68,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-25T05:53:06.392Z\",\n                \"updatedAt\": \"2024-03-25T05:53:30.992Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 1,\n        \"numberOfPeople\": 4,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66012bafdba434f30245ae36\",\n        \"created_at\": \"2024-03-25T07:45:51.157Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"66012bbadba434f30245ae3b\",\n                \"itemId\": 4,\n                \"itemName\": \"Shrimp Tempura\",\n                \"quantity\": 1,\n                \"totalPrice\": 2.99,\n                \"status\": \"served\",\n                \"table\": 2,\n                \"createdAt\": \"2024-03-25T07:46:02.778Z\",\n                \"updatedAt\": \"2024-03-25T07:46:50.515Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"66012bbadba434f30245ae3d\",\n                \"itemId\": 6,\n                \"itemName\": \"Fried Pork\",\n                \"quantity\": 1,\n                \"totalPrice\": 3.5,\n                \"status\": \"served\",\n                \"table\": 2,\n                \"createdAt\": \"2024-03-25T07:46:02.785Z\",\n                \"updatedAt\": \"2024-03-25T07:46:53.953Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 2,\n        \"numberOfPeople\": 3,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66012dc9dba434f30245ae62\",\n        \"created_at\": \"2024-03-25T07:54:49.517Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"66012deedba434f30245ae67\",\n                \"itemId\": 7,\n                \"itemName\": \"Beef Milt\",\n                \"quantity\": 1,\n                \"totalPrice\": 5.34,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-25T07:55:26.828Z\",\n                \"updatedAt\": \"2024-03-27T10:17:25.934Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"66052219a0df46e983c8960c\",\n                \"itemId\": 6,\n                \"itemName\": \"Fried Pork\",\n                \"quantity\": 1,\n                \"totalPrice\": 3.5,\n                \"status\": \"served\",\n                \"table\": 1,\n                \"createdAt\": \"2024-03-28T07:54:01.320Z\",\n                \"updatedAt\": \"2024-03-28T07:54:24.355Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 1,\n        \"numberOfPeople\": 6,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"6605227fa0df46e983c89622\",\n        \"created_at\": \"2024-03-28T07:55:43.670Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"660522aaa0df46e983c89626\",\n                \"itemId\": 7,\n                \"itemName\": \"Beef Milt\",\n                \"quantity\": 5,\n                \"totalPrice\": 26.7,\n                \"status\": \"served\",\n                \"table\": 11,\n                \"createdAt\": \"2024-03-28T07:56:26.963Z\",\n                \"updatedAt\": \"2024-03-28T09:05:17.137Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"660522aaa0df46e983c89628\",\n                \"itemId\": 8,\n                \"itemName\": \"Thai Hotpot\",\n                \"quantity\": 5,\n                \"totalPrice\": 14.5,\n                \"status\": \"served\",\n                \"table\": 11,\n                \"createdAt\": \"2024-03-28T07:56:26.966Z\",\n                \"updatedAt\": \"2024-03-28T09:05:17.535Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 11,\n        \"numberOfPeople\": 6,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66053218a0df46e983c89657\",\n        \"created_at\": \"2024-03-28T09:02:16.374Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"6605325ca0df46e983c8965b\",\n                \"itemId\": 8,\n                \"itemName\": \"Thai Hotpot\",\n                \"quantity\": 1,\n                \"totalPrice\": 2.9,\n                \"status\": \"declined\",\n                \"table\": 3,\n                \"createdAt\": \"2024-03-28T09:03:24.354Z\",\n                \"updatedAt\": \"2024-04-01T07:43:19.807Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"6605325ca0df46e983c8965d\",\n                \"itemId\": 7,\n                \"itemName\": \"Beef Milt\",\n                \"quantity\": 3,\n                \"totalPrice\": 16.02,\n                \"status\": \"declined\",\n                \"table\": 3,\n                \"createdAt\": \"2024-03-28T09:03:24.357Z\",\n                \"updatedAt\": \"2024-03-28T09:07:07.730Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"6605325ca0df46e983c8965f\",\n                \"itemId\": 10,\n                \"itemName\": \"Raw Dipped Beef\",\n                \"quantity\": 2,\n                \"totalPrice\": 4,\n                \"status\": \"served\",\n                \"table\": 3,\n                \"createdAt\": \"2024-03-28T09:03:24.359Z\",\n                \"updatedAt\": \"2024-03-28T09:05:17.923Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 3,\n        \"numberOfPeople\": 5,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66053315a0df46e983c89677\",\n        \"created_at\": \"2024-03-28T09:06:29.987Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"6605331fa0df46e983c8967b\",\n                \"itemId\": 6,\n                \"itemName\": \"Fried Pork\",\n                \"quantity\": 1,\n                \"totalPrice\": 3.5,\n                \"status\": \"served\",\n                \"table\": 5,\n                \"createdAt\": \"2024-03-28T09:06:39.855Z\",\n                \"updatedAt\": \"2024-03-28T09:07:39.670Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"6605331fa0df46e983c8967d\",\n                \"itemId\": 7,\n                \"itemName\": \"Beef Milt\",\n                \"quantity\": 1,\n                \"totalPrice\": 5.34,\n                \"status\": \"served\",\n                \"table\": 5,\n                \"createdAt\": \"2024-03-28T09:06:39.857Z\",\n                \"updatedAt\": \"2024-03-28T09:07:39.995Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"6605331fa0df46e983c8967f\",\n                \"itemId\": 10,\n                \"itemName\": \"Raw Dipped Beef\",\n                \"quantity\": 1,\n                \"totalPrice\": 2,\n                \"status\": \"served\",\n                \"table\": 5,\n                \"createdAt\": \"2024-03-28T09:06:39.859Z\",\n                \"updatedAt\": \"2024-03-28T09:07:40.348Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"6605331fa0df46e983c89681\",\n                \"itemId\": 9,\n                \"itemName\": \"Sipcy Mala Hotpot\",\n                \"quantity\": 1,\n                \"totalPrice\": 4,\n                \"status\": \"served\",\n                \"table\": 5,\n                \"createdAt\": \"2024-03-28T09:06:39.860Z\",\n                \"updatedAt\": \"2024-03-28T09:07:40.760Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"660a313726546c74a32cc60f\",\n                \"itemId\": 10,\n                \"itemName\": \"Raw Dipped Beef\",\n                \"quantity\": 1,\n                \"totalPrice\": 2,\n                \"status\": \"prepare\",\n                \"table\": 5,\n                \"createdAt\": \"2024-04-01T03:59:51.282Z\",\n                \"updatedAt\": \"2024-04-01T07:47:31.368Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 5,\n        \"numberOfPeople\": 1,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"660a65c27f089b0435d6d7d7\",\n        \"created_at\": \"2024-04-01T07:44:02.901Z\",\n        \"end_at\": null,\n        \"orderdetails\": [\n            {\n                \"_id\": \"660a65ed7f089b0435d6d7de\",\n                \"itemId\": 8,\n                \"itemName\": \"Thai Hotpot\",\n                \"quantity\": 3,\n                \"totalPrice\": 8.7,\n                \"status\": \"declined\",\n                \"table\": 2,\n                \"createdAt\": \"2024-04-01T07:44:45.246Z\",\n                \"updatedAt\": \"2024-04-01T07:45:05.077Z\",\n                \"__v\": 0\n            },\n            {\n                \"_id\": \"660a65ed7f089b0435d6d7e0\",\n                \"itemId\": 7,\n                \"itemName\": \"Beef Milt\",\n                \"quantity\": 2,\n                \"totalPrice\": 10.68,\n                \"status\": \"served\",\n                \"table\": 2,\n                \"createdAt\": \"2024-04-01T07:44:45.253Z\",\n                \"updatedAt\": \"2024-04-01T07:45:31.536Z\",\n                \"__v\": 0\n            }\n        ],\n        \"table\": 2,\n        \"numberOfPeople\": 11,\n        \"currentStatus\": \"finished\",\n        \"__v\": 0\n    }\n]"
+				},
+				{
+					"name": "Get Order By Status occupied state example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/orders/orderstatus/occupied",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"orders",
+								"orderstatus",
+								"occupied"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:5173"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "172"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"ac-TEuJKPVurMcHQODMEC/H4Fjgp2k\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 02:52:16 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": \"660a65b37f089b0435d6d7d3\",\n        \"created_at\": \"2024-04-01T07:43:47.906Z\",\n        \"end_at\": null,\n        \"orderdetails\": [],\n        \"table\": 5,\n        \"numberOfPeople\": 2,\n        \"currentStatus\": \"occupied\",\n        \"__v\": 0\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Create Order Request",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{order_base_url}}/api/orders/create-order/:tableId/people/:numberOfPeople",
+					"host": [
+						"{{order_base_url}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"create-order",
+						":tableId",
+						"people",
+						":numberOfPeople"
+					],
+					"variable": [
+						{
+							"key": "tableId",
+							"value": "5",
+							"description": "Table number assigned by Employee"
+						},
+						{
+							"key": "numberOfPeople",
+							"value": "1",
+							"description": "Number of Customers of that table"
+						}
+					]
+				},
+				"description": "Create an new order (or open table) with parameters `tableId` and `numberOfPeople` . The Table ID is assigned by Employee."
+			},
+			"response": [
+				{
+					"name": "Create Order Request Example",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/orders/create-order/:tableId/people/:numberOfPeople",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"orders",
+								"create-order",
+								":tableId",
+								"people",
+								":numberOfPeople"
+							],
+							"variable": [
+								{
+									"key": "tableId",
+									"value": "5",
+									"description": "Table number assigned by Employee"
+								},
+								{
+									"key": "numberOfPeople",
+									"value": "1",
+									"description": "Number of Customers of that table"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:5173"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "52"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"34-QuTrmMqTtNFx30IxXGPCSjAfYjg\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 02:58:07 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Order 660b743f297f48e13a81eaaf created\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Food Menu Items",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{item_base_url}}/api/Items",
+					"host": [
+						"{{item_base_url}}"
+					],
+					"path": [
+						"api",
+						"Items"
+					]
+				},
+				"description": "Get All Items Food Menu"
+			},
+			"response": [
+				{
+					"name": "Example Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5267/api/Items",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5267",
+							"path": [
+								"api",
+								"Items"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 03:12:45 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"itemId\": 4,\n        \"itemName\": \"Shrimp Tempura\",\n        \"itemDescription\": \"Delious Fried Tempura Shrimp along with our Special Sauce\",\n        \"originalPrice\": 2.99,\n        \"images\": [\n            {\n                \"imageId\": 9,\n                \"imageUrl\": \"/Items/zxl3tgbs.r2f.jpg\",\n                \"itemId\": 0\n            }\n        ],\n        \"categoryId\": 10,\n        \"category\": {\n            \"categoryId\": 10,\n            \"categoryName\": \"Seafood\",\n            \"items\": []\n        },\n        \"isLocked\": false,\n        \"isCharged\": false\n    },\n    {\n        \"itemId\": 6,\n        \"itemName\": \"Fried Pork\",\n        \"itemDescription\": \"Crispy Fried Pork Meat with our's special sauce\",\n        \"originalPrice\": 3.5,\n        \"images\": [\n            {\n                \"imageId\": 11,\n                \"imageUrl\": \"/Items/ssaybpd1.pbr.jpg\",\n                \"itemId\": 0\n            }\n        ],\n        \"categoryId\": 11,\n        \"category\": {\n            \"categoryId\": 11,\n            \"categoryName\": \"Meat\",\n            \"items\": []\n        },\n        \"isLocked\": false,\n        \"isCharged\": false\n    },\n    {\n        \"itemId\": 7,\n        \"itemName\": \"Beef Milt\",\n        \"itemDescription\": \"Beef Milt with texture and tenderness\",\n        \"originalPrice\": 5.34,\n        \"images\": [\n            {\n                \"imageId\": 12,\n                \"imageUrl\": \"/Items/wgkwt33u.vs0.jpg\",\n                \"itemId\": 0\n            }\n        ],\n        \"categoryId\": 11,\n        \"category\": {\n            \"categoryId\": 11,\n            \"categoryName\": \"Meat\",\n            \"items\": []\n        },\n        \"isLocked\": false,\n        \"isCharged\": false\n    },\n    {\n        \"itemId\": 8,\n        \"itemName\": \"Thai Hotpot\",\n        \"itemDescription\": \"Flavourful texture with seafood\",\n        \"originalPrice\": 2.9,\n        \"images\": [\n            {\n                \"imageId\": 13,\n                \"imageUrl\": \"/Items/0l5sgxw0.gtv.jpg\",\n                \"itemId\": 0\n            }\n        ],\n        \"categoryId\": 8,\n        \"category\": {\n            \"categoryId\": 8,\n            \"categoryName\": \"HotPot\",\n            \"items\": []\n        },\n        \"isLocked\": false,\n        \"isCharged\": false\n    },\n    {\n        \"itemId\": 9,\n        \"itemName\": \"Sipcy Mala Hotpot\",\n        \"itemDescription\": \"Suitable for winter days with your crush :>\",\n        \"originalPrice\": 4,\n        \"images\": [\n            {\n                \"imageId\": 14,\n                \"imageUrl\": \"/Items/y0xhf1zc.xmo.jpg\",\n                \"itemId\": 0\n            }\n        ],\n        \"categoryId\": 8,\n        \"category\": {\n            \"categoryId\": 8,\n            \"categoryName\": \"HotPot\",\n            \"items\": []\n        },\n        \"isLocked\": false,\n        \"isCharged\": true\n    },\n    {\n        \"itemId\": 10,\n        \"itemName\": \"Raw Dipped Beef\",\n        \"itemDescription\": \"Fresh Beef dipping into your boiling hotpot\",\n        \"originalPrice\": 2,\n        \"images\": [\n            {\n                \"imageId\": 15,\n                \"imageUrl\": \"/Items/hly2b4vd.3ss.jpg\",\n                \"itemId\": 0\n            }\n        ],\n        \"categoryId\": 11,\n        \"category\": {\n            \"categoryId\": 11,\n            \"categoryName\": \"Meat\",\n            \"items\": []\n        },\n        \"isLocked\": false,\n        \"isCharged\": false\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "Get Order Details",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{order_base_url}}/api/orders/orderdetails",
+					"host": [
+						"{{order_base_url}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"orderdetails"
+					]
+				},
+				"description": "Get All Order Details Comming From All `occupied` state Order"
+			},
+			"response": [
+				{
+					"name": "Example Request",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8085/api/orders/orderdetails",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"orders",
+								"orderdetails"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:5173"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "6931"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"1b13-67XbktovbBBILN9+FsMO4aPo2Ss\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 03:24:20 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"_id\": \"65fbdf6c2ed918715749da82\",\n        \"itemId\": 4,\n        \"itemName\": \"Shrimp Tempura\",\n        \"quantity\": 2,\n        \"totalPrice\": 5.98,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-21T07:19:08.288Z\",\n        \"updatedAt\": \"2024-03-21T07:21:13.753Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdf6c2ed918715749da84\",\n        \"itemId\": 8,\n        \"itemName\": \"Thai Hotpot\",\n        \"quantity\": 1,\n        \"totalPrice\": 2.9,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-21T07:19:08.291Z\",\n        \"updatedAt\": \"2024-03-21T07:21:14.646Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdf6c2ed918715749da86\",\n        \"itemId\": 10,\n        \"itemName\": \"Raw Dipped Beef\",\n        \"quantity\": 1,\n        \"totalPrice\": 2,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-21T07:19:08.292Z\",\n        \"updatedAt\": \"2024-03-21T07:21:14.843Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdf972ed918715749da95\",\n        \"itemId\": 6,\n        \"itemName\": \"Fried Pork\",\n        \"quantity\": 2,\n        \"totalPrice\": 7,\n        \"status\": \"served\",\n        \"table\": 2,\n        \"createdAt\": \"2024-03-21T07:19:51.367Z\",\n        \"updatedAt\": \"2024-03-21T07:21:15.049Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdf972ed918715749da97\",\n        \"itemId\": 9,\n        \"itemName\": \"Sipcy Mala Hotpot\",\n        \"quantity\": 1,\n        \"totalPrice\": 4,\n        \"status\": \"served\",\n        \"table\": 2,\n        \"createdAt\": \"2024-03-21T07:19:51.370Z\",\n        \"updatedAt\": \"2024-03-21T07:21:15.221Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdf972ed918715749da99\",\n        \"itemId\": 10,\n        \"itemName\": \"Raw Dipped Beef\",\n        \"quantity\": 1,\n        \"totalPrice\": 2,\n        \"status\": \"served\",\n        \"table\": 2,\n        \"createdAt\": \"2024-03-21T07:19:51.372Z\",\n        \"updatedAt\": \"2024-03-21T07:21:15.419Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdfc42ed918715749daa6\",\n        \"itemId\": 4,\n        \"itemName\": \"Shrimp Tempura\",\n        \"quantity\": 2,\n        \"totalPrice\": 5.98,\n        \"status\": \"served\",\n        \"table\": 3,\n        \"createdAt\": \"2024-03-21T07:20:36.508Z\",\n        \"updatedAt\": \"2024-03-21T07:21:15.618Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdfc42ed918715749daa8\",\n        \"itemId\": 6,\n        \"itemName\": \"Fried Pork\",\n        \"quantity\": 2,\n        \"totalPrice\": 7,\n        \"status\": \"served\",\n        \"table\": 3,\n        \"createdAt\": \"2024-03-21T07:20:36.510Z\",\n        \"updatedAt\": \"2024-03-21T07:21:10.929Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdfc42ed918715749daaa\",\n        \"itemId\": 8,\n        \"itemName\": \"Thai Hotpot\",\n        \"quantity\": 1,\n        \"totalPrice\": 2.9,\n        \"status\": \"served\",\n        \"table\": 3,\n        \"createdAt\": \"2024-03-21T07:20:36.511Z\",\n        \"updatedAt\": \"2024-03-21T07:21:15.822Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdfc42ed918715749daac\",\n        \"itemId\": 9,\n        \"itemName\": \"Sipcy Mala Hotpot\",\n        \"quantity\": 1,\n        \"totalPrice\": 4,\n        \"status\": \"served\",\n        \"table\": 3,\n        \"createdAt\": \"2024-03-21T07:20:36.512Z\",\n        \"updatedAt\": \"2024-03-21T07:21:16.024Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fbdfc42ed918715749daae\",\n        \"itemId\": 10,\n        \"itemName\": \"Raw Dipped Beef\",\n        \"quantity\": 2,\n        \"totalPrice\": 4,\n        \"status\": \"served\",\n        \"table\": 3,\n        \"createdAt\": \"2024-03-21T07:20:36.513Z\",\n        \"updatedAt\": \"2024-03-21T07:21:16.539Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fd577521cc0e105c82a0bf\",\n        \"itemId\": 10,\n        \"itemName\": \"Raw Dipped Beef\",\n        \"quantity\": 1,\n        \"totalPrice\": 2,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-22T10:03:33.446Z\",\n        \"updatedAt\": \"2024-03-22T10:05:25.465Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fd577521cc0e105c82a0c1\",\n        \"itemId\": 7,\n        \"itemName\": \"Beef Milt\",\n        \"quantity\": 1,\n        \"totalPrice\": 5.34,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-22T10:03:33.451Z\",\n        \"updatedAt\": \"2024-03-22T10:04:50.725Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fd577521cc0e105c82a0c3\",\n        \"itemId\": 9,\n        \"itemName\": \"Sipcy Mala Hotpot\",\n        \"quantity\": 1,\n        \"totalPrice\": 4,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-22T10:03:33.453Z\",\n        \"updatedAt\": \"2024-03-22T10:04:58.055Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"65fd57db21cc0e105c82a0dd\",\n        \"itemId\": 4,\n        \"itemName\": \"Shrimp Tempura\",\n        \"quantity\": 1,\n        \"totalPrice\": 2.99,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-22T10:05:15.054Z\",\n        \"updatedAt\": \"2024-03-22T10:05:26.288Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66011142dba434f30245ae18\",\n        \"itemId\": 7,\n        \"itemName\": \"Beef Milt\",\n        \"quantity\": 2,\n        \"totalPrice\": 10.68,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-25T05:53:06.392Z\",\n        \"updatedAt\": \"2024-03-25T05:53:30.992Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66012bbadba434f30245ae3b\",\n        \"itemId\": 4,\n        \"itemName\": \"Shrimp Tempura\",\n        \"quantity\": 1,\n        \"totalPrice\": 2.99,\n        \"status\": \"served\",\n        \"table\": 2,\n        \"createdAt\": \"2024-03-25T07:46:02.778Z\",\n        \"updatedAt\": \"2024-03-25T07:46:50.515Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66012bbadba434f30245ae3d\",\n        \"itemId\": 6,\n        \"itemName\": \"Fried Pork\",\n        \"quantity\": 1,\n        \"totalPrice\": 3.5,\n        \"status\": \"served\",\n        \"table\": 2,\n        \"createdAt\": \"2024-03-25T07:46:02.785Z\",\n        \"updatedAt\": \"2024-03-25T07:46:53.953Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66012deedba434f30245ae67\",\n        \"itemId\": 7,\n        \"itemName\": \"Beef Milt\",\n        \"quantity\": 1,\n        \"totalPrice\": 5.34,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-25T07:55:26.828Z\",\n        \"updatedAt\": \"2024-03-27T10:17:25.934Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"66052219a0df46e983c8960c\",\n        \"itemId\": 6,\n        \"itemName\": \"Fried Pork\",\n        \"quantity\": 1,\n        \"totalPrice\": 3.5,\n        \"status\": \"served\",\n        \"table\": 1,\n        \"createdAt\": \"2024-03-28T07:54:01.320Z\",\n        \"updatedAt\": \"2024-03-28T07:54:24.355Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"660522aaa0df46e983c89626\",\n        \"itemId\": 7,\n        \"itemName\": \"Beef Milt\",\n        \"quantity\": 5,\n        \"totalPrice\": 26.7,\n        \"status\": \"served\",\n        \"table\": 11,\n        \"createdAt\": \"2024-03-28T07:56:26.963Z\",\n        \"updatedAt\": \"2024-03-28T09:05:17.137Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"660522aaa0df46e983c89628\",\n        \"itemId\": 8,\n        \"itemName\": \"Thai Hotpot\",\n        \"quantity\": 5,\n        \"totalPrice\": 14.5,\n        \"status\": \"served\",\n        \"table\": 11,\n        \"createdAt\": \"2024-03-28T07:56:26.966Z\",\n        \"updatedAt\": \"2024-03-28T09:05:17.535Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"6605325ca0df46e983c8965b\",\n        \"itemId\": 8,\n        \"itemName\": \"Thai Hotpot\",\n        \"quantity\": 1,\n        \"totalPrice\": 2.9,\n        \"status\": \"declined\",\n        \"table\": 3,\n        \"createdAt\": \"2024-03-28T09:03:24.354Z\",\n        \"updatedAt\": \"2024-04-01T07:43:19.807Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"6605325ca0df46e983c8965d\",\n        \"itemId\": 7,\n        \"itemName\": \"Beef Milt\",\n        \"quantity\": 3,\n        \"totalPrice\": 16.02,\n        \"status\": \"declined\",\n        \"table\": 3,\n        \"createdAt\": \"2024-03-28T09:03:24.357Z\",\n        \"updatedAt\": \"2024-03-28T09:07:07.730Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"6605325ca0df46e983c8965f\",\n        \"itemId\": 10,\n        \"itemName\": \"Raw Dipped Beef\",\n        \"quantity\": 2,\n        \"totalPrice\": 4,\n        \"status\": \"served\",\n        \"table\": 3,\n        \"createdAt\": \"2024-03-28T09:03:24.359Z\",\n        \"updatedAt\": \"2024-03-28T09:05:17.923Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"6605331fa0df46e983c8967b\",\n        \"itemId\": 6,\n        \"itemName\": \"Fried Pork\",\n        \"quantity\": 1,\n        \"totalPrice\": 3.5,\n        \"status\": \"served\",\n        \"table\": 5,\n        \"createdAt\": \"2024-03-28T09:06:39.855Z\",\n        \"updatedAt\": \"2024-03-28T09:07:39.670Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"6605331fa0df46e983c8967d\",\n        \"itemId\": 7,\n        \"itemName\": \"Beef Milt\",\n        \"quantity\": 1,\n        \"totalPrice\": 5.34,\n        \"status\": \"served\",\n        \"table\": 5,\n        \"createdAt\": \"2024-03-28T09:06:39.857Z\",\n        \"updatedAt\": \"2024-03-28T09:07:39.995Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"6605331fa0df46e983c8967f\",\n        \"itemId\": 10,\n        \"itemName\": \"Raw Dipped Beef\",\n        \"quantity\": 1,\n        \"totalPrice\": 2,\n        \"status\": \"served\",\n        \"table\": 5,\n        \"createdAt\": \"2024-03-28T09:06:39.859Z\",\n        \"updatedAt\": \"2024-03-28T09:07:40.348Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"6605331fa0df46e983c89681\",\n        \"itemId\": 9,\n        \"itemName\": \"Sipcy Mala Hotpot\",\n        \"quantity\": 1,\n        \"totalPrice\": 4,\n        \"status\": \"served\",\n        \"table\": 5,\n        \"createdAt\": \"2024-03-28T09:06:39.860Z\",\n        \"updatedAt\": \"2024-03-28T09:07:40.760Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"660a313726546c74a32cc60f\",\n        \"itemId\": 10,\n        \"itemName\": \"Raw Dipped Beef\",\n        \"quantity\": 1,\n        \"totalPrice\": 2,\n        \"status\": \"prepare\",\n        \"table\": 5,\n        \"createdAt\": \"2024-04-01T03:59:51.282Z\",\n        \"updatedAt\": \"2024-04-01T07:47:31.368Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"660a65ed7f089b0435d6d7de\",\n        \"itemId\": 8,\n        \"itemName\": \"Thai Hotpot\",\n        \"quantity\": 3,\n        \"totalPrice\": 8.7,\n        \"status\": \"declined\",\n        \"table\": 2,\n        \"createdAt\": \"2024-04-01T07:44:45.246Z\",\n        \"updatedAt\": \"2024-04-01T07:45:05.077Z\",\n        \"__v\": 0\n    },\n    {\n        \"_id\": \"660a65ed7f089b0435d6d7e0\",\n        \"itemId\": 7,\n        \"itemName\": \"Beef Milt\",\n        \"quantity\": 2,\n        \"totalPrice\": 10.68,\n        \"status\": \"served\",\n        \"table\": 2,\n        \"createdAt\": \"2024-04-01T07:44:45.253Z\",\n        \"updatedAt\": \"2024-04-01T07:45:31.536Z\",\n        \"__v\": 0\n    }\n]"
+				}
+			]
+		},
+		{
+			"name": "update order detail status",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{accessToken}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"status\" : \"serve\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{order_base_url}}/api/orders/detail-status/:detailId",
+					"host": [
+						"{{order_base_url}}"
+					],
+					"path": [
+						"api",
+						"orders",
+						"detail-status",
+						":detailId"
+					],
+					"variable": [
+						{
+							"key": "detailId",
+							"value": "660a313726546c74a32cc60f"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Example Update Order Detail",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"status\" : \"serve\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8085/api/orders/detail-status/:detailId",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8085",
+							"path": [
+								"api",
+								"orders",
+								"detail-status",
+								":detailId"
+							],
+							"variable": [
+								{
+									"key": "detailId",
+									"value": "660a313726546c74a32cc60f"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "X-Powered-By",
+							"value": "Express"
+						},
+						{
+							"key": "Access-Control-Allow-Origin",
+							"value": "http://localhost:5173"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Content-Length",
+							"value": "63"
+						},
+						{
+							"key": "ETag",
+							"value": "W/\"3f-77c5M1hyMyLBfxnE6ZFqtq37g8c\""
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 03:32:57 GMT"
+						},
+						{
+							"key": "Connection",
+							"value": "keep-alive"
+						},
+						{
+							"key": "Keep-Alive",
+							"value": "timeout=5"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"message\": \"Detail ID 660a313726546c74a32cc60f status updated\"\n}"
+				}
+			]
+		},
+		{
+			"name": "Lock & Unlock Food Item",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"url": {
+					"raw": "{{item_base_url}}/api/Items/status/:detailId?status=unlock",
+					"host": [
+						"{{item_base_url}}"
+					],
+					"path": [
+						"api",
+						"Items",
+						"status",
+						":detailId"
+					],
+					"query": [
+						{
+							"key": "status",
+							"value": "unlock"
+						}
+					],
+					"variable": [
+						{
+							"key": "detailId",
+							"value": "8"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Lock Food Item",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5267/api/Items/status/:detailId?status=lock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5267",
+							"path": [
+								"api",
+								"Items",
+								"status",
+								":detailId"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "lock"
+								}
+							],
+							"variable": [
+								{
+									"key": "detailId",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 03:43:01 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"isLocked\": true\n}"
+				},
+				{
+					"name": "Unlock Food Item",
+					"originalRequest": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{item_base_url}}/api/Items/status/:detailId?status=unlock",
+							"host": [
+								"{{item_base_url}}"
+							],
+							"path": [
+								"api",
+								"Items",
+								"status",
+								":detailId"
+							],
+							"query": [
+								{
+									"key": "status",
+									"value": "unlock"
+								}
+							],
+							"variable": [
+								{
+									"key": "detailId",
+									"value": "8"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 03:43:23 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"isLocked\": false\n}"
+				}
+			]
+		},
+		{
+			"name": "Get Payments By Date",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{payment_base_url}}/api/Payments?date=2024-03-31T17:00:00.000Z",
+					"host": [
+						"{{payment_base_url}}"
+					],
+					"path": [
+						"api",
+						"Payments"
+					],
+					"query": [
+						{
+							"key": "date",
+							"value": "2024-03-31T17:00:00.000Z",
+							"description": "If date is not specified then retrieve all payments"
+						}
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "Payments Example",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:5211/api/Payments",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "5211",
+							"path": [
+								"api",
+								"Payments"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": null,
+									"description": "If date is not specified then retrieve all payments",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 03:50:36 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 18,\n        \"name\": \"Customer 03/21/2024 14:21:33\",\n        \"amount\": 80,\n        \"orderId\": \"65fbdf5f2ed918715749da7e\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-21T14:21:34\"\n    },\n    {\n        \"id\": 19,\n        \"name\": \"Customer 03/21/2024 14:21:41\",\n        \"amount\": 40,\n        \"orderId\": \"65fbdf852ed918715749da90\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-21T14:21:41\"\n    },\n    {\n        \"id\": 20,\n        \"name\": \"Customer 03/21/2024 14:21:42\",\n        \"amount\": 160,\n        \"orderId\": \"65fbdfb52ed918715749daa1\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-21T14:21:43\"\n    },\n    {\n        \"id\": 23,\n        \"name\": \"Customer 03/22/2024 17:11:53\",\n        \"amount\": 80,\n        \"orderId\": \"65fd575521cc0e105c82a0bb\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-22T17:11:53\"\n    },\n    {\n        \"id\": 24,\n        \"name\": \"Customer 03/25/2024 14:47:13\",\n        \"amount\": 120,\n        \"orderId\": \"66012bafdba434f30245ae36\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-25T14:47:14\"\n    },\n    {\n        \"id\": 25,\n        \"name\": \"Customer 03/25/2024 14:47:28\",\n        \"amount\": 160,\n        \"orderId\": \"65fe51bba690fc0730af6256\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-25T14:47:28\"\n    },\n    {\n        \"id\": 26,\n        \"name\": \"Customer 03/28/2024 14:55:21\",\n        \"amount\": 240,\n        \"orderId\": \"66012dc9dba434f30245ae62\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-28T14:55:21\"\n    },\n    {\n        \"id\": 27,\n        \"name\": \"Customer 03/28/2024 14:58:55\",\n        \"amount\": 240,\n        \"orderId\": \"6605227fa0df46e983c89622\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-28T14:58:56\"\n    },\n    {\n        \"id\": 28,\n        \"name\": \"Customer 03/28/2024 16:05:31\",\n        \"amount\": 200,\n        \"orderId\": \"66053218a0df46e983c89657\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-03-28T16:05:31\"\n    },\n    {\n        \"id\": 29,\n        \"name\": \"Customer 04/01/2024 14:46:06\",\n        \"amount\": 40,\n        \"orderId\": \"66053315a0df46e983c89677\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-04-01T14:46:07\"\n    },\n    {\n        \"id\": 30,\n        \"name\": \"Customer 04/01/2024 14:46:44\",\n        \"amount\": 440,\n        \"orderId\": \"660a65c27f089b0435d6d7d7\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-04-01T14:46:45\"\n    }\n]"
+				},
+				{
+					"name": "With date query string",
+					"originalRequest": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{payment_base_url}}/api/Payments?date=2024-03-31T17:00:00.000Z",
+							"host": [
+								"{{payment_base_url}}"
+							],
+							"path": [
+								"api",
+								"Payments"
+							],
+							"query": [
+								{
+									"key": "date",
+									"value": "2024-03-31T17:00:00.000Z",
+									"description": "If date is not specified then retrieve all payments"
+								}
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json; charset=utf-8"
+						},
+						{
+							"key": "Date",
+							"value": "Tue, 02 Apr 2024 03:55:16 GMT"
+						},
+						{
+							"key": "Server",
+							"value": "Kestrel"
+						},
+						{
+							"key": "Transfer-Encoding",
+							"value": "chunked"
+						}
+					],
+					"cookie": [],
+					"body": "[\n    {\n        \"id\": 29,\n        \"name\": \"Customer 04/01/2024 14:46:06\",\n        \"amount\": 40,\n        \"orderId\": \"66053315a0df46e983c89677\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-04-01T14:46:07\"\n    },\n    {\n        \"id\": 30,\n        \"name\": \"Customer 04/01/2024 14:46:44\",\n        \"amount\": 440,\n        \"orderId\": \"660a65c27f089b0435d6d7d7\",\n        \"status\": \"completed\",\n        \"createdAt\": \"2024-04-01T14:46:45\"\n    }\n]"
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "auth_base_url",
+			"value": "http://localhost:8086"
+		},
+		{
+			"key": "order_base_url",
+			"value": "http://localhost:8085",
+			"type": "string"
+		},
+		{
+			"key": "accessToken",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOjEsInVzZXJuYW1lIjoidXNlcjEiLCJyb2xlcyI6WyJ1c2VyIiwiYWRtaW4iLCJXYWl0ZXIiXSwiaWF0IjoxNzEyMDI0ODIxLCJleHAiOjE3MTIxMTEyMjF9.pc7Amz9-ED3SHr9fHiGKhvfz4QHdG8oeBKnEf6S1JdU"
+		},
+		{
+			"key": "item_base_url",
+			"value": "http://localhost:5267"
+		},
+		{
+			"key": "payment_base_url",
+			"value": "http://localhost:5211"
+		}
+	]
+}

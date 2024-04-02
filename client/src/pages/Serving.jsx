@@ -3,6 +3,7 @@ import { Table,Button } from 'flowbite-react'
 import { MdDone } from "react-icons/md";
 import fetchWithAuth from '../services/fetchWithAuth';
 import { useSelector } from 'react-redux';
+import NotFounded from '../components/NotFounded';
 function Serving() {
     const [orders, setOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
@@ -48,7 +49,7 @@ function Serving() {
     }, []);
     const {currentUser} = useSelector(state => state.user)
     if(currentUser.roles.includes('Chief Staff')){
-      return <h1>Unauthorized Route</h1>
+      return <NotFounded/>
     }
   return (
     <div className='flex justify-center'>      
