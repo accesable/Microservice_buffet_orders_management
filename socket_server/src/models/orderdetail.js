@@ -13,7 +13,9 @@ const orderDetailSchema = new mongoose.Schema(
       default: "pending", // Optional: set a default status
     },
     table: Number,
+    orderId: { type: mongoose.Schema.Types.ObjectId, ref: "Order" },
   },
+
   { timestamps: true }
 );
 module.exports = mongoose.model("OrderDetail", orderDetailSchema);
