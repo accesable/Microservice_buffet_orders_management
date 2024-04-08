@@ -11,7 +11,7 @@ function Dashboard() {
     console.log('Selected date:', date);
   };
   const {currentUser} = useSelector(state => state.user)
-  if(currentUser.roles.includes('Chief Staff')){
+  if(!currentUser.roles.includes('Manager')){
     return <NotFounded/>
   }
 

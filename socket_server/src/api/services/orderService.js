@@ -19,7 +19,25 @@ const getOrdersByStatus = async (status) => {
 };
 
 const updateOrderStatus = async (orderId, status) => {
+  // Update the order status
   await Order.findByIdAndUpdate(orderId, { currentStatus: status });
+
+  // Check if the status is "finished"
+  if (status === "finished") {
+    // Find the order details associated with the order
+    const orderDetails = await OrderDetail.find({
+      orderId: orderId,
+      status: "declined",
+    });
+
+    // Update the status of order details to "payed"
+    await Promise.all(
+      orderDetails.map(async (orderDetail) => {
+        orderDetail.status = "out";
+        await orderDetail.save();
+      })
+    );
+  }
 };
 
 const getOrderById = async (orderId) => {
@@ -85,6 +103,7 @@ const addDetailsToOrder = async (orderDetails, orderId) => {
         quantity: orderDetail.quantity,
         unitPrice: orderDetail.unitPrice,
         totalPrice: orderDetail.totalPrice,
+        orderId: orderId,
         table: table,
       });
 
